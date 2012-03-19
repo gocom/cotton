@@ -29,7 +29,6 @@
 				opt.field.focus();
 				opt.selection = opt.field.rah_textile_bar('caret');
 				opt.lines = opt.field.val().split(/\r\n|\r|\n/);
-				opt.words = {};
 				
 				opt.selection.words = {
 					start : 0,
@@ -67,16 +66,28 @@
 
 					$.each(line.split(' '), function(index, word) {
 						
-						if(opt.selection.start <= i && opt.selection.end >= i) {
-							opt.selection.words.text.push(word);
+						if(i > opt.selection.end) {
+							return;
 						}
 						
-						opt.words[i] = word;
+						if(i+word.length >= opt.selection.start) {
+							
+							if(!opt.selection.words.text[0]) {
+								opt.selection.words.start = i;
+							}
+							
+							opt.selection.words.text.push(word);
+							opt.selection.words.end = i+word.length;
+						}
+						
 						i += word.length+1;
 					});
 				});
 				
-				opt.selection.char_before = opt.field.val().substr(opt.selection.start-1, 1);
+				opt.selection.char_before = (
+					opt.selection.start < 1 ? 
+						'' : opt.field.val().substr(opt.selection.start-1, 1)
+				);
 				opt.selection.is_empty = (!opt.selection.text);
 				opt.selection.is_whitespace = (!opt.selection.is_empty && !$.trim(opt.selection.text));
 				opt.selection.is_inline = (opt.selection.text.indexOf("\n") == -1);
@@ -307,8 +318,31 @@
 		 */
 		
 		link : function() {
+			
+			var text = opt.selection.text;
+			var link = 'http://';
+			
+			if(
+				opt.selection.is_empty &&
+				opt.selection.words.text.length == 1
+			) {
+				opt.selection.start = opt.selection.words.start;
+				opt.selection.end = opt.selection.words.end;
+				text = opt.selection.words.text.join(' ');
+			}
+			
+			if(text.indexOf('http://') == 0 || text.indexOf('https://') == 0) {
+				link = text;
+				text = '$';
+			}
+			
+			else if(text.indexOf('www.') == 0) {
+				link = 'http://'+text;
+				text = '$';
+			}
+			
+			insert('"' + text + '":'+link);
 		}
-	
 	};
 
 	$.fn.rah_textile_bar = function(method) {

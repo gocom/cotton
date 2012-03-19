@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>rah_textile_bar</title>
+	
+	<!--
+		Twitter bootstrap CSS
+		http://twitter.github.com/bootstrap/
+	-->
+	
+	<link href="../_bootstrap/css/bootstrap.css" rel="stylesheet" />
+	<link href="../_bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+	
+	<link rel="stylesheet" type="text/css" media="all" href="../cotton.css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../cotton.js"></script>
+</head>
+<body style="padding: 50px 0;">
+	
+	<form method="post" action="#" class="form-horizontal">
+		
+		<fieldset>
+			
+			<div class="controls">
+				<div class="rah_textile_bar">
+					<a class="rah_textile_bar" href="#body" data-callback="inline" data-before="*" data-after="*">Strong</a>
+					<a class="rah_textile_bar" href="#body" data-callback="inline" data-before="_" data-after="_">Em</a>
+					<a class="rah_textile_bar" href="#body" data-callback="inline" data-before="+" data-after="+">Ins</a>
+					<a class="rah_textile_bar" href="#body" data-callback="inline" data-before="-" data-after="-">Del</a>
+					<a class="rah_textile_bar" href="#body" data-callback="list" data-bullet="*">Ul</a>
+					<a class="rah_textile_bar" href="#body" data-callback="code">Code</a>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="body">Body</label>
+			
+				<div class="controls">
+					
+					<textarea class="input-xlarge" id="body" name="body" rows="15" style="width: 550px">Textpattern has a lot of tales to tell. Despite the name, page_url the tag can handle a lot of more than URLs. In current Textpattern 4.x branch implementation page_url has access directly to some Textpattern’s core definitions and data, pretext array to be exact.
+
+Depending on the context the tag is being deployed, whether individual article page, search page, or article list, the possible options variate. The tag’s type attribute takes at least following options in list context.
+
+List item #1
+List item #2
+List item #3</textarea>
+				</div>
+			
+			</div>
+		
+			<div class="form-actions">
+				<button type="reset" class="btn btn-primary">Reset</button>
+			</div>
+			
+			<div class="controls">
+				<pre style="width: 540px; max-height: 100px; overflow-y: auto;">Current selection...</pre>
+			</div>
+		
+		</fieldset>
+	</form>
+	
+	<script type="text/javascript">
+		$('a.rah_textile_bar').rah_textile_bar();
+		
+		$('.form-actions').append('<span style="margin-left: 5px;" class="badge badge-inverse caretStart">0</span> <span class="badge badge-inverse caretEnd">0</span>');
+		
+		$("textarea").keydown(function(){
+			var caret = $(this).rah_textile_bar('caret');
+			$("span.caretStart").text(caret.start);
+			$("span.caretEnd").text(caret.end);
+			$('pre').text(caret.text);
+		}).keypress(function(){
+			var caret = $(this).rah_textile_bar('caret');
+			$("span.caretStart").text(caret.start);
+			$("span.caretEnd").text(caret.end);
+			$('pre').text(caret.text);
+		}).mousemove(function(){
+			var caret = $(this).rah_textile_bar('caret');
+			$("span.caretStart").text(caret.start);
+			$("span.caretEnd").text(caret.end);
+			$('pre').text(caret.text);
+		});
+	</script>
+</body>
+</html>

@@ -287,8 +287,19 @@
 		 */
 		
 		heading : function() {
+			
+			var line = opt.selection.lines.text.join("\n");
+			var s = line.substr(0,3);
+			
+			if(jQuery.inArray(s, ['h1.', 'h2.', 'h3.', 'h4.', 'h5.', 'h6.']) >= 0) {
+				s = s == 'h6.' ? 1 : parseInt(s.substr(1,1)) + 1;
+				insert(s, opt.selection.lines.start+1, opt.selection.lines.start+2);
+				opt.selection.end = opt.selection.lines.start+line.length;
+				return;
+			}
+			
 			insert(
-				opt['level'] +'. ' + $.trim(opt.selection.lines.text.join("\n")) + "\n\n",
+				opt.level +'. ' + line + "\n\n",
 				opt.selection.lines.start, 
 				opt.selection.lines.end
 			);

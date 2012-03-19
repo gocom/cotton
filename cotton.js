@@ -289,6 +289,16 @@
 		 */
 		
 		inline : function() {
+			
+			if(
+				is.empty &&
+				opt.selection.words.text.length == 1
+			) {
+				opt.selection.start = opt.selection.words.start;
+				opt.selection.end = opt.selection.words.end;
+				opt.selection.text = opt.selection.words.text.join(' ');
+			}
+			
 			var r = !is.whitespace && is.inline ? 
 				opt.before + opt.selection.text + opt.after : 
 				opt.selection.text + opt.before + opt.after;

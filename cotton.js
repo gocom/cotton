@@ -6,7 +6,7 @@
 
 (function($, len, createRange, duplicate){
 
-	var opt = {}, is = {};
+	var opt = {}, is = {}, form = {};
 	
 	var methods = {
 		
@@ -83,29 +83,34 @@
 					});
 				});
 				
+				
 				opt.selection.char_before = (
 					opt.selection.start < 1 ? 
 						'' : opt.field.val().substr(opt.selection.start-1, 1)
 				);
+
 				is.empty = (!opt.selection.text);
 				is.whitespace = (!is.empty && !$.trim(opt.selection.text));
 				is.inline = (opt.selection.text.indexOf("\n") == -1);
+				
 				is.linefirst = (
-					opt.selection.start < 1 || 
+					opt.selection.start < 1 ||
 					opt.selection.char_before == "\n" || 
 					opt.selection.char_before == "\r"
 				);
 				
 				var offset = opt.selection.lines.end;
-				var c = opt.field.val().replace(/(\r\n|\r)/gm, "\n");
+				var c = opt.field.val();
 				
 				is.paragraph = (
-					c.indexOf("\n\n", offset) >= 0
+					c.indexOf("\n\n", offset) >= 0 ||
+					c.indexOf("\r\n\r\n", offset) >= 0
 				);
 				
 				is.block = (
 					!is.paragraph &&
-					c.indexOf("\n", offset) >= 0
+					c.indexOf("\n", offset) >= 0 ||
+					c.indexOf("\r\n", offset) >= 0
 				);
 				
 				if(!format[opt.callback]){
@@ -138,8 +143,6 @@
 		caret : function(options) {
 			
 			var start, end, t = this[0], browser = $.browser.msie;
-			
-			//t.value = t.value.replace(/(\r\n|\r)/gm, "\n");
 			
 			if(
 				typeof options === "object" && 

@@ -24,7 +24,7 @@
 					}
 				});
 				
-				opt.field = $('#'+$(this).attr('href').substr(1));
+				opt.field = $($(this).attr('href'));
 				opt.field.focus();
 				opt.selection = methods.caret.apply(opt.field);
 				opt.lines = opt.field.val().split(/\r\n|\r|\n/);

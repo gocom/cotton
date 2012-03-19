@@ -6,7 +6,7 @@
 
 (function($, len, createRange, duplicate){
 
-	var opt = {};
+	var opt = {}, is = {};
 	
 	var methods = {
 		
@@ -17,7 +17,6 @@
 		init : function() {
 			this.click(function(e) {
 				e.preventDefault();
-				opt = {};
 
 				$.each(this.attributes, function(index, attr) {
 					if(attr.name.substr(0, 5) == 'data-') {
@@ -88,10 +87,10 @@
 					opt.selection.start < 1 ? 
 						'' : opt.field.val().substr(opt.selection.start-1, 1)
 				);
-				opt.selection.is_empty = (!opt.selection.text);
-				opt.selection.is_whitespace = (!opt.selection.is_empty && !$.trim(opt.selection.text));
-				opt.selection.is_inline = (opt.selection.text.indexOf("\n") == -1);
-				opt.selection.is_linefirst = (
+				is.empty = (!opt.selection.text);
+				is.whitespace = (!is.empty && !$.trim(opt.selection.text));
+				is.inline = (opt.selection.text.indexOf("\n") == -1);
+				is.linefirst = (
 					opt.selection.start < 1 || 
 					opt.selection.char_before == "\n" || 
 					opt.selection.char_before == "\r"
@@ -100,12 +99,12 @@
 				var offset = opt.selection.lines.end;
 				var c = opt.field.val().replace(/(\r\n|\r)/gm, "\n");
 				
-				opt.selection.is_paragraph = (
+				is.paragraph = (
 					c.indexOf("\n\n", offset) >= 0
 				);
 				
-				opt.selection.is_block = (
-					!opt.selection.is_paragraph &&
+				is.block = (
+					!is.paragraph &&
 					c.indexOf("\n", offset) >= 0
 				);
 				
@@ -244,8 +243,8 @@
 		code : function() {
 			
 			if(
-				(opt.selection.is_linefirst && opt.selection.is_empty) ||
-				!opt.selection.is_inline
+				(is.linefirst && is.empty) ||
+				!is.inline
 			) {
 				insert(
 					'bc. ' + $.trim(opt.selection.lines.text.join("\n")),
@@ -268,7 +267,7 @@
 			var out = [];
 			
 			$.each(opt.selection.lines.text, function(key, line){
-				out.push(( (opt.selection.is_linefirst && opt.selection.is_empty) || $.trim(line) ? opt.bullet + ' ' : '') + line);
+				out.push(( (is.linefirst && is.empty) || $.trim(line) ? opt.bullet + ' ' : '') + line);
 			});
 			
 			out = out.join("\n");
@@ -287,7 +286,7 @@
 		 */
 		
 		inline : function() {
-			var r = !opt.selection.is_whitespace && opt.selection.is_inline ? 
+			var r = !is.whitespace && is.inline ? 
 				opt.before + opt.selection.text + opt.after : 
 				opt.selection.text + opt.before + opt.after;
 			
@@ -311,7 +310,7 @@
 			}
 			
 			insert(
-				opt.level +'. ' + line + (!opt.selection.is_paragraph ? "\n\n" : ''),
+				opt.level +'. ' + line + (!is.paragraph ? "\n\n" : ''),
 				opt.selection.lines.start, 
 				opt.selection.lines.end
 			);
@@ -324,21 +323,21 @@
 		block : function() {
 			insert(
 				opt['tag'] +'. ' + $.trim(opt.selection.lines.text.join("\n")) + 
-				(!opt.selection.is_paragraph ? "\n\n" : ''),
+				(!is.paragraph ? "\n\n" : ''),
 				opt.selection.lines.start, 
 				opt.selection.lines.end
 			);
 		},
 		
 		/**
-		 * Formats image
+		 * Formats a image
 		 */
 		
 		image : function() {
 		},
 		
 		/**
-		 * Adds a link
+		 * Formats a link
 		 */
 		
 		link : function() {
@@ -347,7 +346,7 @@
 			var link = 'http://';
 			
 			if(
-				opt.selection.is_empty &&
+				is.empty &&
 				opt.selection.words.text.length == 1
 			) {
 				opt.selection.start = opt.selection.words.start;

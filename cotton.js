@@ -6,7 +6,7 @@
 
 (function($, len, createRange, duplicate){
 
-	var opt = {}, is = {}, form = {};
+	var opt = {}, is = {}, form = {}, words = {}, lines = {};
 	
 	var methods = {
 		
@@ -29,17 +29,8 @@
 				opt.selection = methods.caret.apply(opt.field);
 				opt.lines = opt.field.val().split(/\r\n|\r|\n/);
 				
-				opt.selection.words = {
-					start : 0,
-					end : 0,
-					text : [],
-				};
-				
-				opt.selection.lines = {
-					start : 0,
-					end : 0,
-					text : [],
-				};
+				words = { start : 0, end : 0, text : [] };
+				lines = { start : 0, end : 0, text : [] };
 				
 				var i = 0, lineend = 0, linestart = 0;
 				
@@ -53,33 +44,33 @@
 						
 					if(lineend >= opt.selection.start) {
 						
-						if(!opt.selection.lines.text[0]) {
-							opt.selection.lines.start = linestart;
+						if(!lines.text[0]) {
+							lines.start = linestart;
 						}
 						
-						opt.selection.lines.text.push(line);
-						opt.selection.lines.end = lineend;
+						lines.text.push(line);
+						lines.end = lineend;
 					}
 					
 					linestart = lineend+1;
 
-					$.each(line.split(' '), function(index, word) {
+					$.each(line.split(' '), function(index, w) {
 						
 						if(i > opt.selection.end) {
 							return;
 						}
 						
-						if(i+word.length >= opt.selection.start) {
+						if(i+w.length >= opt.selection.start) {
 							
-							if(!opt.selection.words.text[0]) {
-								opt.selection.words.start = i;
+							if(!words.text[0]) {
+								words.start = i;
 							}
 							
-							opt.selection.words.text.push(word);
-							opt.selection.words.end = i+word.length;
+							words.text.push(w);
+							words.end = i+w.length;
 						}
 						
-						i += word.length+1;
+						i += w.length+1;
 					});
 				});
 				
@@ -99,7 +90,7 @@
 					opt.selection.char_before == "\r"
 				);
 				
-				var offset = opt.selection.lines.end;
+				var offset = lines.end;
 				var c = opt.field.val();
 				
 				is.paragraph = (
@@ -250,9 +241,9 @@
 				!is.inline
 			) {
 				insert(
-					'bc. ' + $.trim(opt.selection.lines.text.join("\n")),
-					opt.selection.lines.start, 
-					opt.selection.lines.end
+					'bc. ' + $.trim(lines.text.join("\n")),
+					lines.start, 
+					lines.end
 				);
 				return;
 			}
@@ -269,7 +260,7 @@
 			
 			var out = [];
 			
-			$.each(opt.selection.lines.text, function(key, line){
+			$.each(lines.text, function(key, line){
 				out.push(( (is.linefirst && is.empty) || $.trim(line) ? opt.bullet + ' ' : '') + line);
 			});
 			
@@ -277,11 +268,11 @@
 			
 			insert(
 				out, 
-				opt.selection.lines.start, 
-				opt.selection.lines.end
+				lines.start, 
+				lines.end
 			);
 			
-			opt.selection.end = opt.selection.lines.start + out.length;
+			opt.selection.end = lines.start + out.length;
 		},
 		
 		/**
@@ -292,11 +283,11 @@
 			
 			if(
 				is.empty &&
-				opt.selection.words.text.length == 1
+				words.text.length == 1
 			) {
-				opt.selection.start = opt.selection.words.start;
-				opt.selection.end = opt.selection.words.end;
-				opt.selection.text = opt.selection.words.text.join(' ');
+				opt.selection.start = words.start;
+				opt.selection.end = words.end;
+				opt.selection.text = words.text.join(' ');
 			}
 			
 			var r = !is.whitespace && is.inline ? 
@@ -312,20 +303,20 @@
 		
 		heading : function() {
 			
-			var line = opt.selection.lines.text.join("\n");
+			var line = lines.text.join("\n");
 			var s = line.substr(0,3);
 			
 			if(jQuery.inArray(s, ['h1.', 'h2.', 'h3.', 'h4.', 'h5.', 'h6.']) >= 0) {
 				s = s == 'h6.' ? 1 : parseInt(s.substr(1,1)) + 1;
-				insert(s, opt.selection.lines.start+1, opt.selection.lines.start+2);
-				opt.selection.end = opt.selection.lines.start+line.length;
+				insert(s, lines.start+1, lines.start+2);
+				opt.selection.end = lines.start+line.length;
 				return;
 			}
 			
 			insert(
 				opt.level +'. ' + line + (!is.paragraph ? "\n\n" : ''),
-				opt.selection.lines.start, 
-				opt.selection.lines.end
+				lines.start, 
+				lines.end
 			);
 		},
 		
@@ -335,10 +326,10 @@
 		
 		block : function() {
 			insert(
-				opt['tag'] +'. ' + $.trim(opt.selection.lines.text.join("\n")) + 
+				opt['tag'] +'. ' + $.trim(lines.text.join("\n")) + 
 				(!is.paragraph ? "\n\n" : ''),
-				opt.selection.lines.start, 
-				opt.selection.lines.end
+				lines.start, 
+				lines.end
 			);
 		},
 		
@@ -360,11 +351,11 @@
 			
 			if(
 				is.empty &&
-				opt.selection.words.text.length == 1
+				words.text.length == 1
 			) {
-				opt.selection.start = opt.selection.words.start;
-				opt.selection.end = opt.selection.words.end;
-				text = opt.selection.words.text.join(' ');
+				opt.selection.start = words.start;
+				opt.selection.end = words.end;
+				text = words.text.join(' ');
 			}
 			
 			if(text.indexOf('http://') == 0 || text.indexOf('https://') == 0) {
@@ -378,6 +369,36 @@
 			}
 			
 			insert('"' + text + '":'+link);
+		},
+		
+		/**
+		 * Formats acronym
+		 */
+		
+		acronym : function() {
+			
+			var text = opt.selection.text;
+			var abc = 'ABC';
+
+			if(is.empty) {
+				
+				if(
+					words.text.length == 1 && 
+					words.text[0].length >= 3 &&
+					/[:lower:]/.test(words.text[0]) === false
+				) {
+					abc = words.text[0];
+				}
+				
+				else {
+					text = words.text.join(' ');
+				}
+			
+				opt.selection.start = words.start;
+				opt.selection.end = words.end;
+			}
+			
+			insert(abc+'('+text+')');
 		}
 	};
 

@@ -97,6 +97,18 @@
 					opt.selection.char_before == "\r"
 				);
 				
+				var offset = opt.selection.lines.end;
+				var c = opt.field.val().replace(/(\r\n|\r)/gm, "\n");
+				
+				opt.selection.is_paragraph = (
+					c.indexOf("\n\n", offset) >= 0
+				);
+				
+				opt.selection.is_block = (
+					!opt.selection.is_paragraph &&
+					c.indexOf("\n", offset) >= 0
+				);
+				
 				if(!format[opt.callback]){
 					return;
 				}
@@ -299,7 +311,7 @@
 			}
 			
 			insert(
-				opt.level +'. ' + line + "\n\n",
+				opt.level +'. ' + line + (!opt.selection.is_paragraph ? "\n\n" : ''),
 				opt.selection.lines.start, 
 				opt.selection.lines.end
 			);
@@ -311,7 +323,8 @@
 		
 		block : function() {
 			insert(
-				opt['tag'] +'. ' + $.trim(opt.selection.lines.text.join("\n")) + "\n\n",
+				opt['tag'] +'. ' + $.trim(opt.selection.lines.text.join("\n")) + 
+				(!opt.selection.is_paragraph ? "\n\n" : ''),
 				opt.selection.lines.start, 
 				opt.selection.lines.end
 			);

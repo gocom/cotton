@@ -26,7 +26,7 @@
 				
 				opt.field = $('#'+$(this).attr('href').substr(1));
 				opt.field.focus();
-				opt.selection = opt.field.rah_textile_bar('caret');
+				opt.selection = methods.caret.apply(opt.field);
 				opt.lines = opt.field.val().split(/\r\n|\r|\n/);
 				
 				opt.selection.words = {
@@ -118,10 +118,10 @@
 					opt.field.val(f);
 				}
 				
-				opt.field.rah_textile_bar('caret', {
+				methods.caret.apply(opt.field, [{
 					start : opt.selection.end, 
 					end : opt.selection.end
-				});
+				}]);
 			});
 		},
 		

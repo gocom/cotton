@@ -19,7 +19,7 @@
 				e.preventDefault();
 
 				$.each(this.attributes, function(index, attr) {
-					if(attr.name.substr(0, 5) == 'data-') {
+					if(attr.name.indexOf('data-') === 0) {
 						opt[attr.name.substr(5)] = attr.value;
 					}
 				});

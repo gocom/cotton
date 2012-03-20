@@ -27,32 +27,31 @@
 				opt.field = $($(this).attr('href'));
 				opt.field.focus();
 				opt.selection = methods.caret.apply(opt.field);
-				opt.lines = opt.field.val().split(/\r\n|\r|\n/);
 				
 				words = { start : 0, end : 0, text : [] };
 				lines = { start : 0, end : 0, text : [] };
 				
-				var i = 0, lineend = 0, linestart = 0;
+				var i = 0, ls = 0, le = 0;
 				
-				$.each(opt.lines, function(linenumber, line){
+				$.each(opt.field.val().split(/\r\n|\r|\n/), function(index, line){
 					
-					if(linestart > opt.selection.end) {
+					if(ls > opt.selection.end) {
 						return;
 					}
 				
-					lineend = linestart+line.length;
+					le = ls+line.length;
 						
-					if(lineend >= opt.selection.start) {
+					if(le >= opt.selection.start) {
 						
 						if(!lines.text[0]) {
-							lines.start = linestart;
+							lines.start = ls;
 						}
 						
 						lines.text.push(line);
-						lines.end = lineend;
+						lines.end = le;
 					}
 					
-					linestart = lineend+1;
+					ls = le+1;
 
 					$.each(line.split(' '), function(index, w) {
 						

@@ -247,8 +247,7 @@
 				return;
 			}
 			
-			insert('@'+opt.selection.text+'@');
-			return;
+			format.inline();
 		},
 		
 		/**

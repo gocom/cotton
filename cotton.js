@@ -1,79 +1,85 @@
 
 /*!
  * Rah_textile_bar
+ *
  * @author Jukka Svahn
  */
 
 (function($, len, createRange, duplicate){
 
 	var opt = {}, is = {}, form = {}, words = {}, lines = {};
-	
+
 	var methods = {
-		
+
 		/**
 		 * Initialize
 		 */
-		
+
 		init : function() {
 			this.click(function(e) {
 				e.preventDefault();
 
-				$.each(this.attributes, function(index, attr) {
-					if(attr.name.indexOf('data-') === 0) {
+				$.each(this.attributes, function(index, attr)
+				{
+					if (attr.name.indexOf('data-') === 0)
+					{
 						opt[attr.name.substr(5)] = attr.value;
 					}
 				});
-				
+
 				opt.field = $($(this).attr('href'));
 				opt.field.focus();
 				opt.selection = methods.caret.apply(opt.field);
-				
+
 				words = { start : 0, end : 0, text : [] };
 				lines = { start : 0, end : 0, text : [] };
-				
+
 				var i = 0, ls = 0, le = 0;
-				
+
 				$.each(opt.field.val().split(/\r\n|\r|\n/), function(index, line){
-					
-					if(ls > opt.selection.end) {
+
+					if (ls > opt.selection.end)
+					{
 						return;
 					}
-				
+
 					le = ls+line.length;
 						
-					if(le >= opt.selection.start) {
-						
-						if(!lines.text[0]) {
+					if (le >= opt.selection.start)
+					{
+						if (!lines.text[0])
+						{
 							lines.start = ls;
 						}
-						
+
 						lines.text.push(line);
 						lines.end = le;
 					}
-					
+
 					ls = le+1;
 
 					$.each(line.split(' '), function(index, w) {
-						
-						if(i > opt.selection.end) {
+
+						if (i > opt.selection.end)
+						{
 							return;
 						}
-						
-						if(i+w.length >= opt.selection.start) {
-							
-							if(!words.text[0]) {
+
+						if (i+w.length >= opt.selection.start)
+						{
+							if (!words.text[0])
+							{
 								words.start = i;
 							}
-							
+
 							words.text.push(w);
 							words.end = i+w.length;
 						}
-						
+
 						i += w.length+1;
 					});
 				});
-				
-				
+
 				opt.selection.char_before = (
 					opt.selection.start < 1 ? 
 						'' : opt.field.val().substr(opt.selection.start-1, 1)
@@ -102,17 +108,19 @@
 					c.indexOf("\n", offset) >= 0 ||
 					c.indexOf("\r\n", offset) >= 0
 				);
-				
-				if(!format[opt.callback]){
+
+				if (!format[opt.callback])
+				{
 					return;
 				}
-					
+
 				var f = format[opt.callback]();
-				
-				if(f) {
+
+				if (f)
+				{
 					opt.field.val(f);
 				}
-				
+
 				methods.caret.apply(opt.field, [{
 					start : opt.selection.end, 
 					end : opt.selection.end
@@ -130,45 +138,48 @@
 		 * http://www.opensource.org/licenses/mit-license.php
 		 */
 		
-		caret : function(options) {
-			
+		caret : function(options)
+		{
 			var start, end, t = this[0], browser = $.browser.msie;
-			
-			if(
+
+			if (
 				typeof options === "object" && 
 				typeof options.start === "number" && 
 				typeof options.end === "number"
-			) {
+			)
+			{
 				start = options.start;
 				end = options.end;
 			}
-			
-			if(typeof start != "undefined"){
-				
-				if(browser){
+
+			if (typeof start != "undefined")
+			{
+				if (browser)
+				{
 					var selRange = this[0].createTextRange();
 					selRange.collapse(true);
 					selRange.moveStart('character', start);
 					selRange.moveEnd('character', end-start);
 					selRange.select();
 				}
-				
-				else {
+				else
+				{
 					this[0].selectionStart = start;
 					this[0].selectionEnd = end;
 				}
-				
+
 				this[0].focus();
 				return this;
 			}
-			
-			else {
-			
-				if(browser){
-					
+
+			else
+			{
+				if (browser)
+				{
 					var selection = document.selection;
-					
-					if (this[0].tagName.toLowerCase() != "textarea") {
+
+					if (this[0].tagName.toLowerCase() != "textarea")
+					{
 						var val = this.val(),
 						range = selection[createRange]()[duplicate]();
 						range.moveEnd("character", val[len]);
@@ -177,8 +188,8 @@
 						range.moveStart("character", -val[len]);
 						var e = range.text[len];
 					}
-					
-					else {
+					else
+					{
 						var range = selection[createRange](),
 						stored_range = range[duplicate]();
 						stored_range.moveToElementText(this[0]);
@@ -187,12 +198,13 @@
 						e = s + range.text[len]
 					}
 				}
-			
-				else {
+
+				else
+				{
 					var s = t.selectionStart, 
 					e = t.selectionEnd;
 				}
-			
+
 				return {
 					start : s,
 					end : e,
@@ -201,128 +213,127 @@
 			}
 		}
 	};
-	
+
 	/**
-	 * Replaces selection with Textile markup
-	 * @param string string
-	 * @param int start
-	 * @param int end
+	 * Replaces a selection with Textile markup.
+	 *
+	 * @param {string}  string
+	 * @param {integer} start
+	 * @param {integer} end
 	 */
-	
-	var insert = function(string, start, end) {
-		
-		if(typeof start === "undefined") {
+
+	var insert = function(string, start, end)
+	{
+		if(typeof start === "undefined")
+		{
 			start = opt.selection.start;
 		}
-		
-		if(typeof end === "undefined") {
+
+		if(typeof end === "undefined")
+		{
 			end = opt.selection.end;
 		}
-		
+
 		opt.field.val(opt.field.val().substring(0, start) + string + opt.field.val().substring(end));
 		opt.selection.end = start + string.length;
 	};
-	
+
 	/**
-	 * Formatting methods
+	 * Formatting methods.
 	 */
-	
-	var format = {
-		
+
+	var format =
+	{
 		/**
-		 * Formats a code block
+		 * Formats a code block.
 		 */
-		
-		code : function() {
-			
-			if(
-				(is.linefirst && is.empty) ||
-				!is.inline
-			) {
+
+		code : function()
+		{
+			if ((is.linefirst && is.empty) || !is.inline)
+			{
 				insert(
 					'bc. ' + $.trim(lines.text.join("\n")),
 					lines.start, 
 					lines.end
 				);
+
 				return;
 			}
-			
+
 			format.inline();
 		},
-		
+
 		/**
-		 * Formats lists: ul, ol
+		 * Formats a list such as &lt;ul&gt; and &lt;ol&gt;.
 		 */
-		
-		list : function() {
-			
+
+		list : function()
+		{
 			var out = [];
-			
-			$.each(lines.text, function(key, line){
-				out.push(( (is.linefirst && is.empty) || $.trim(line) ? opt.bullet + ' ' : '') + line);
+
+			$.each(lines.text, function(key, line) {
+				out.push(((is.linefirst && is.empty) || $.trim(line) ? opt.bullet + ' ' : '') + line);
 			});
-			
+
 			out = out.join("\n");
-			
-			insert(
-				out, 
-				lines.start, 
-				lines.end
-			);
-			
+			insert(out, lines.start, lines.end);
 			opt.selection.end = lines.start + out.length;
 		},
-		
+
 		/**
-		 * Formats simple inline tags: strong, bold, em, ins, del
+		 * Formats simple inline tags.
+		 *
+		 * Works for elements such as &lt;strong&gt;, &lt;bold&gt;, 
+		 * &lt;em&gt;, &lt;ins&gt;, &lt;del&gt;.
 		 */
-		
-		inline : function() {
-			
-			if(
-				is.empty &&
-				words.text.length == 1
-			) {
+
+		inline : function()
+		{
+			if (is.empty && words.text.length == 1)
+			{
 				opt.selection.start = words.start;
 				opt.selection.end = words.end;
 				opt.selection.text = words.text.join(' ');
 			}
-			
+
 			var r = !is.whitespace && is.inline ? 
 				opt.before + opt.selection.text + opt.after : 
 				opt.selection.text + opt.before + opt.after;
-			
+
 			insert(r);
 		},
-		
+
 		/**
-		 * Formats headings
+		 * Formats a heading.
 		 */
 		
-		heading : function() {
-			
+		heading : function()
+		{
 			var line = lines.text.join("\n");
 			var s = line.substr(0,3);
-			
-			if(jQuery.inArray(s, ['h1.', 'h2.', 'h3.', 'h4.', 'h5.', 'h6.']) >= 0) {
+
+			if (jQuery.inArray(s, ['h1.', 'h2.', 'h3.', 'h4.', 'h5.', 'h6.']) >= 0)
+			{
 				s = s == 'h6.' ? 1 : parseInt(s.substr(1,1)) + 1;
 				insert(s, lines.start+1, lines.start+2);
 				opt.selection.end = lines.start+line.length;
 				return;
 			}
-			
+
 			insert(
 				opt.level +'. ' + line + (!is.paragraph ? "\n\n" : ''),
 				lines.start, 
 				lines.end
 			);
 		},
-		
+
 		/**
-		 * Formats normal blocks
+		 * Formats a block.
 		 */
-		
-		block : function() {
+
+		block : function()
+		{
 			insert(
 				opt['tag'] +'. ' + $.trim(lines.text.join("\n")) + 
 				(!is.paragraph ? "\n\n" : ''),
@@ -330,87 +341,90 @@
 				lines.end
 			);
 		},
-		
+
 		/**
-		 * Formats a image
+		 * Formats an image.
+		 *
+		 * @todo Not implemented
 		 */
-		
-		image : function() {
+
+		image : function()
+		{
 		},
-		
+
 		/**
-		 * Formats a link
+		 * Formats a link.
 		 */
-		
-		link : function() {
-			
+
+		link : function()
+		{
 			var text = opt.selection.text;
 			var link = 'http://';
-			
-			if(
-				is.empty &&
-				words.text.length == 1
-			) {
+
+			if (is.empty && words.text.length == 1)
+			{
 				opt.selection.start = words.start;
 				opt.selection.end = words.end;
 				text = words.text.join(' ');
 			}
-			
-			if(text.indexOf('http://') == 0 || text.indexOf('https://') == 0) {
+
+			if (text.indexOf('http://') == 0 || text.indexOf('https://') == 0)
+			{
 				link = text;
 				text = '$';
 			}
-			
-			else if(text.indexOf('www.') == 0) {
+
+			else if(text.indexOf('www.') == 0)
+			{
 				link = 'http://'+text;
 				text = '$';
 			}
-			
+
 			insert('"' + text + '":'+link);
 		},
-		
+
 		/**
-		 * Formats acronym
+		 * Formats an acronym.
 		 */
-		
-		acronym : function() {
-			
+
+		acronym : function()
+		{
 			var text = opt.selection.text;
 			var abc = 'ABC';
 
-			if(is.empty) {
-				
-				if(
-					words.text.length == 1 && 
-					words.text[0].length >= 3 &&
-					/[:lower:]/.test(words.text[0]) === false
-				) {
+			if (is.empty)
+			{
+				if(words.text.length == 1 && words.text[0].length >= 3 && /[:lower:]/.test(words.text[0]) === false)
+				{
 					abc = words.text[0];
 				}
-				
-				else {
+				else
+				{
 					text = words.text.join(' ');
 				}
-			
+
 				opt.selection.start = words.start;
 				opt.selection.end = words.end;
 			}
-			
+
 			insert(abc+'('+text+')');
 		}
 	};
 
-	$.fn.rah_textile_bar = function(method) {
-		
-		if(methods[method]){
+	$.fn.rah_textile_bar = function(method)
+	{
+		if (methods[method])
+		{
 			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
 		}
-		
-		else if(typeof method === 'object' || !method){
+
+		else if (typeof method === 'object' || !method)
+		{
 			return methods.init.apply(this, arguments);
 		}
-		
-		else {
+
+		else
+		{
 			$.error('[rah_textile_bar: unknown method '+method+']');
 		}
 	};

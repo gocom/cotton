@@ -167,69 +167,20 @@
     
     methods.caret = function(options)
     {
-        var $this = this.get(0), start, end, range, val, selection;
+        var $this = this.get(0), start = 0, end = 0;
 
-        options = $.extend({
-            start : false,
-            end   : false
-        }, options);
-
-        if ($.type(options.start) === 'number' && $.type(options.end) === 'number')
+        if ($.type(options) === 'object' && $.type(options.start) === 'number' && $.type(options.end) === 'number')
         {
-            if ($.type($this.createTextRange) !== 'undefined')
+            if ($.type($this.setSelectionRange) !== 'undefined')
             {
-                range = $this.createTextRange();
-                range.collapse(true);
-                range.moveStart('character', options.start);
-                range.moveEnd('character', options.end - options.start);
-                range.select();
-            }
-            else if ($.type($this.selectionStart) !== 'undefined')
-            {
-                $this.selectionStart = options.start;
-                $this.selectionEnd = options.end;
+                setSelectionRange(options.start, options.end);
+                this.eq(0).focus();
             }
 
-            this.eq(0).focus();
             return this;
         }
 
-        if ($.type($this.createTextRange) !== 'undefined')
-        {
-            selection = document.selection;
-
-            if ($this.tagName.toLowerCase() !== 'textarea')
-            {
-                val = this.eq(0).val();
-                range = selection[createRange]()[duplicate]();
-                range.moveEnd('character', val.length);
-
-                if (range.text === '')
-                {
-                    start = val.length;
-                }
-                else
-                {
-                    start = val.lastIndexOf(range.text);
-                }
-
-                range = selection[createRange]()[duplicate]();
-                range.moveStart('character', -val.length);
-                end = range.text.length;
-            }
-            else
-            {
-                range = selection[createRange]();
-
-                var stored_range = range[duplicate]();
-                stored_range.moveToElementText($this);
-                stored_range.setEndPoint('EndToEnd', range);
-
-                start = stored_range.text.length - range.text.length;
-                end = start + range.text.length;
-            }
-        }
-        else if ($.type($this.selectionStart) !== 'undefined')
+        if ($.type($this.selectionStart) !== 'undefined')
         {
             start = $this.selectionStart;
             end = $this.selectionEnd;

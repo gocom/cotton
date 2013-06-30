@@ -410,22 +410,15 @@
         }
     };
 
-    $.fn.rah_textile_bar = function(method)
+    $.fn.rah_textile_bar = function (method, options)
     {
-        if (methods[method])
+        if ($.type(method) !== 'string' || $.type(methods[method]) !== 'function')
         {
-            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+            options = method;
+            method = 'init';
         }
 
-        else if (typeof method === 'object' || !method)
-        {
-            return methods.init.apply(this, arguments);
-        }
-
-        else
-        {
-            $.error('[rah_textile_bar: unknown method '+method+']');
-        }
+        return methods[method].call(this, options);
     };
 
 })(jQuery, 'length', 'createRange', 'duplicate');

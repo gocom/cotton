@@ -140,7 +140,7 @@
         
         caret : function(options)
         {
-            var start, end, t = this[0], browser = $.browser.msie;
+            var start, end, t = this[0];
 
             if (
                 typeof options === "object" && 
@@ -154,7 +154,7 @@
 
             if (typeof start != "undefined")
             {
-                if (browser)
+                if ($.type(this[0].createTextRange) !== 'undefined')
                 {
                     var selRange = this[0].createTextRange();
                     selRange.collapse(true);
@@ -162,7 +162,7 @@
                     selRange.moveEnd('character', end-start);
                     selRange.select();
                 }
-                else
+                else if ($.type(this[0].selectionStart) !== 'undefined')
                 {
                     this[0].selectionStart = start;
                     this[0].selectionEnd = end;
@@ -174,7 +174,7 @@
 
             else
             {
-                if (browser)
+                if ($.type(this[0].createTextRange) !== 'undefined')
                 {
                     var selection = document.selection;
 
@@ -198,8 +198,7 @@
                         e = s + range.text[len]
                     }
                 }
-
-                else
+                else if ($.type(this[0].selectionStart) !== 'undefined')
                 {
                     var s = t.selectionStart, 
                     e = t.selectionEnd;

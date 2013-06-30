@@ -1,5 +1,5 @@
 /**
- * Dense - Device pixel ratio aware images
+ * Cotton.js - Textile quick tag bar
  *
  * @link    https://github.com/gocom/cotton.js
  * @license MIT

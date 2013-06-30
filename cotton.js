@@ -431,7 +431,7 @@
         }
     };
 
-    $.fn.rah_textile_bar = function (method, options)
+    $.fn.cotton = function (method, options)
     {
         if ($.type(method) !== 'string' || $.type(methods[method]) !== 'function')
         {

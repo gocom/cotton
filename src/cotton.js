@@ -26,7 +26,21 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-(function($, len, createRange, duplicate){
+(function (factory)
+{
+    'use strict';
+
+    if (typeof define === 'function' && define.amd)
+    {
+        define(['jquery'], factory);
+    }
+    else
+    {
+        factory(window.jQuery);
+    }
+}(function ($)
+{
+    'use strict';
 
     var opt = {}, is = {}, form = {}, words = {}, lines = {};
 
@@ -441,5 +455,4 @@
 
         return methods[method].call(this, options);
     };
-
-})(jQuery, 'length', 'createRange', 'duplicate');
+}));

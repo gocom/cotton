@@ -42,210 +42,204 @@
 {
     'use strict';
 
-    var opt = {}, is = {}, form = {}, words = {}, lines = {};
+    var opt = {}, is = {}, form = {}, words = {}, lines = {}, methods = {};
 
-    var methods = {
+    methods.init = function ()
+    {
+        return this.on('click.cotton', function (e)
+        {
+            e.preventDefault();
 
-        /**
-         * Initialize
-         */
-
-        init : function() {
-            this.click(function(e) {
-                e.preventDefault();
-
-                $.each(this.attributes, function(index, attr)
+            $.each(this.attributes, function(index, attr)
+            {
+                if (attr.name.indexOf('data-') === 0)
                 {
-                    if (attr.name.indexOf('data-') === 0)
+                    opt[attr.name.substr(5)] = attr.value;
+                }
+            });
+
+            opt.field = $($(this).attr('href'));
+            opt.field.focus();
+            opt.selection = methods.caret.apply(opt.field);
+
+            words = { start : 0, end : 0, text : [] };
+            lines = { start : 0, end : 0, text : [] };
+
+            var i = 0, ls = 0, le = 0;
+
+            $.each(opt.field.val().split(/\r\n|\r|\n/), function(index, line)
+            {
+                if (ls > opt.selection.end)
+                {
+                    return false;
+                }
+
+                le = ls+line.length;
+                        
+                if (le >= opt.selection.start)
+                {
+                    if (!lines.text[0])
                     {
-                        opt[attr.name.substr(5)] = attr.value;
+                        lines.start = ls;
                     }
-                });
 
-                opt.field = $($(this).attr('href'));
-                opt.field.focus();
-                opt.selection = methods.caret.apply(opt.field);
+                    lines.text.push(line);
+                    lines.end = le;
+                }
 
-                words = { start : 0, end : 0, text : [] };
-                lines = { start : 0, end : 0, text : [] };
+                ls = le+1;
 
-                var i = 0, ls = 0, le = 0;
-
-                $.each(opt.field.val().split(/\r\n|\r|\n/), function(index, line){
-
-                    if (ls > opt.selection.end)
+                $.each(line.split(' '), function(index, w)
+                {
+                    if (i > opt.selection.end)
                     {
                         return;
                     }
 
-                    le = ls+line.length;
-                        
-                    if (le >= opt.selection.start)
+                    if (i+w.length >= opt.selection.start)
                     {
-                        if (!lines.text[0])
+                        if (!words.text[0])
                         {
-                            lines.start = ls;
+                            words.start = i;
                         }
 
-                        lines.text.push(line);
-                        lines.end = le;
+                        words.text.push(w);
+                        words.end = i+w.length;
                     }
 
-                    ls = le+1;
-
-                    $.each(line.split(' '), function(index, w) {
-
-                        if (i > opt.selection.end)
-                        {
-                            return;
-                        }
-
-                        if (i+w.length >= opt.selection.start)
-                        {
-                            if (!words.text[0])
-                            {
-                                words.start = i;
-                            }
-
-                            words.text.push(w);
-                            words.end = i+w.length;
-                        }
-
-                        i += w.length+1;
-                    });
+                    i += w.length+1;
                 });
-
-                opt.selection.char_before = (
-                    opt.selection.start < 1 ? 
-                        '' : opt.field.val().substr(opt.selection.start-1, 1)
-                );
-
-                is.empty = (!opt.selection.text);
-                is.whitespace = (!is.empty && !$.trim(opt.selection.text));
-                is.inline = (opt.selection.text.indexOf("\n") == -1);
-                
-                is.linefirst = (
-                    opt.selection.start < 1 ||
-                    opt.selection.char_before == "\n" || 
-                    opt.selection.char_before == "\r"
-                );
-                
-                var offset = lines.end;
-                var c = opt.field.val();
-                
-                is.paragraph = (
-                    c.indexOf("\n\n", offset) >= 0 ||
-                    c.indexOf("\r\n\r\n", offset) >= 0
-                );
-                
-                is.block = (
-                    !is.paragraph &&
-                    c.indexOf("\n", offset) >= 0 ||
-                    c.indexOf("\r\n", offset) >= 0
-                );
-
-                if (!format[opt.callback])
-                {
-                    return;
-                }
-
-                var f = format[opt.callback]();
-
-                if (f)
-                {
-                    opt.field.val(f);
-                }
-
-                methods.caret.apply(opt.field, [{
-                    start : opt.selection.end, 
-                    end : opt.selection.end
-                }]);
             });
-        },
-        
-        /*!
-         * Caret code based on jCaret
-         * @author C. F., Wong (Cloudgen)
-         * @link http://code.google.com/p/jcaret/
-         *
-         * Copyright (c) 2010 C. F., Wong (http://cloudgen.w0ng.hk)
-         * Licensed under the MIT License:
-         * http://www.opensource.org/licenses/mit-license.php
-         */
-        
-        caret : function(options)
+
+            opt.selection.char_before = (
+                opt.selection.start < 1 ? 
+                    '' : opt.field.val().substr(opt.selection.start-1, 1)
+            );
+
+            is.empty = (!opt.selection.text);
+            is.whitespace = (!is.empty && !$.trim(opt.selection.text));
+            is.inline = (opt.selection.text.indexOf("\n") == -1);
+    
+            is.linefirst = (
+                opt.selection.start < 1 ||
+                opt.selection.char_before == "\n" || 
+                opt.selection.char_before == "\r"
+            );
+                
+            var offset = lines.end;
+            var c = opt.field.val();
+    
+            is.paragraph = (
+                c.indexOf("\n\n", offset) >= 0 ||
+                c.indexOf("\r\n\r\n", offset) >= 0
+            );
+    
+            is.block = (!is.paragraph && c.indexOf("\n", offset) >= 0 || c.indexOf("\r\n", offset) >= 0);
+
+            if (!format[opt.callback])
+            {
+                return;
+            }
+
+            var f = format[opt.callback]();
+
+            if (f)
+            {
+                opt.field.val(f);
+            }
+
+            methods.caret.apply(opt.field, [{
+                start : opt.selection.end, 
+                end : opt.selection.end
+            }]);
+        });
+    };
+  
+    /**
+     * Caret code based on jCaret
+     * @author C. F., Wong (Cloudgen)
+     * @link http://code.google.com/p/jcaret/
+     *
+     * Copyright (c) 2010 C. F., Wong (http://cloudgen.w0ng.hk)
+     * Licensed under the MIT License:
+     * http://www.opensource.org/licenses/mit-license.php
+     */
+    
+    methods.caret = function(options)
+    {
+        var $this = this.get(0), start, end, range, val, selection;
+
+        options = $.extend({
+            start : false,
+            end   : false
+        }, options);
+
+        if ($.type(options.start) === 'number' && $.type(options.end) === 'number')
         {
-            var start, end, t = this[0];
-
-            if (
-                typeof options === "object" && 
-                typeof options.start === "number" && 
-                typeof options.end === "number"
-            )
+            if ($.type($this.createTextRange) !== 'undefined')
             {
-                start = options.start;
-                end = options.end;
+                range = $this.createTextRange();
+                range.collapse(true);
+                range.moveStart('character', options.start);
+                range.moveEnd('character', options.end - options.start);
+                range.select();
+            }
+            else if ($.type($this.selectionStart) !== 'undefined')
+            {
+                $this.selectionStart = options.start;
+                $this.selectionEnd = options.end;
             }
 
-            if (typeof start != "undefined")
+            this.eq(0).focus();
+            return this;
+        }
+
+        if ($.type($this.createTextRange) !== 'undefined')
+        {
+            selection = document.selection;
+
+            if ($this.tagName.toLowerCase() !== 'textarea')
             {
-                if ($.type(this[0].createTextRange) !== 'undefined')
+                val = this.eq(0).val();
+                range = selection[createRange]()[duplicate]();
+                range.moveEnd('character', val.length);
+
+                if (range.text === '')
                 {
-                    var selRange = this[0].createTextRange();
-                    selRange.collapse(true);
-                    selRange.moveStart('character', start);
-                    selRange.moveEnd('character', end-start);
-                    selRange.select();
+                    start = val.length;
                 }
-                else if ($.type(this[0].selectionStart) !== 'undefined')
+                else
                 {
-                    this[0].selectionStart = start;
-                    this[0].selectionEnd = end;
+                    start = val.lastIndexOf(range.text);
                 }
 
-                this[0].focus();
-                return this;
+                range = selection[createRange]()[duplicate]();
+                range.moveStart('character', -val.length);
+                end = range.text.length;
             }
-
             else
             {
-                if ($.type(this[0].createTextRange) !== 'undefined')
-                {
-                    var selection = document.selection;
+                range = selection[createRange]();
 
-                    if (this[0].tagName.toLowerCase() != "textarea")
-                    {
-                        var val = this.val(),
-                        range = selection[createRange]()[duplicate]();
-                        range.moveEnd("character", val[len]);
-                        var s = (range.text == "" ? val[len]:val.lastIndexOf(range.text));
-                        range = selection[createRange]()[duplicate]();
-                        range.moveStart("character", -val[len]);
-                        var e = range.text[len];
-                    }
-                    else
-                    {
-                        var range = selection[createRange](),
-                        stored_range = range[duplicate]();
-                        stored_range.moveToElementText(this[0]);
-                        stored_range.setEndPoint('EndToEnd', range);
-                        var s = stored_range.text[len] - range.text[len],
-                        e = s + range.text[len]
-                    }
-                }
-                else if ($.type(this[0].selectionStart) !== 'undefined')
-                {
-                    var s = t.selectionStart, 
-                    e = t.selectionEnd;
-                }
+                var stored_range = range[duplicate]();
+                stored_range.moveToElementText($this);
+                stored_range.setEndPoint('EndToEnd', range);
 
-                return {
-                    start : s,
-                    end : e,
-                    text : t.value.substring(s,e)
-                };
+                start = stored_range.text.length - range.text.length;
+                end = start + range.text.length;
             }
         }
+        else if ($.type($this.selectionStart) !== 'undefined')
+        {
+            start = $this.selectionStart;
+            end = $this.selectionEnd;
+        }
+
+        return {
+            start : start,
+            end   : end,
+            text  : this.eq(0).val().substring(start, end)
+        };
     };
 
     /**

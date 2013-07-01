@@ -173,7 +173,7 @@
         {
             if ($.type($this.setSelectionRange) !== 'undefined')
             {
-                setSelectionRange(options.start, options.end);
+                $this.setSelectionRange(options.start, options.end);
                 this.eq(0).focus();
             }
 

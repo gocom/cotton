@@ -42,7 +42,7 @@
 {
     'use strict';
 
-    var opt = {}, is = {}, form = {}, words = {}, lines = {}, methods = {};
+    var opt = {}, is = {}, form = {}, words = {}, lines = {}, methods = {}, format = {};
 
     methods.init = function ()
     {
@@ -203,12 +203,12 @@
 
     var insert = function(string, start, end)
     {
-        if(typeof start === "undefined")
+        if ($.type(start) === 'undefined')
         {
             start = opt.selection.start;
         }
 
-        if(typeof end === "undefined")
+        if ($.type(end) === 'undefined')
         {
             end = opt.selection.end;
         }
@@ -218,176 +218,167 @@
     };
 
     /**
-     * Formatting methods.
+     * Formats a code block.
      */
 
-    var format =
+    format.code = function ()
     {
-        /**
-         * Formats a code block.
-         */
-
-        code : function()
+        if ((is.linefirst && is.empty) || !is.inline)
         {
-            if ((is.linefirst && is.empty) || !is.inline)
-            {
-                insert(
-                    'bc. ' + $.trim(lines.text.join("\n")),
-                    lines.start, 
-                    lines.end
-                );
-
-                return;
-            }
-
-            format.inline();
-        },
-
-        /**
-         * Formats a list such as &lt;ul&gt; and &lt;ol&gt;.
-         */
-
-        list : function()
-        {
-            var out = [];
-
-            $.each(lines.text, function(key, line) {
-                out.push(((is.linefirst && is.empty) || $.trim(line) ? opt.bullet + ' ' : '') + line);
-            });
-
-            out = out.join("\n");
-            insert(out, lines.start, lines.end);
-            opt.selection.end = lines.start + out.length;
-        },
-
-        /**
-         * Formats simple inline tags.
-         *
-         * Works for elements such as &lt;strong&gt;, &lt;bold&gt;, 
-         * &lt;em&gt;, &lt;ins&gt;, &lt;del&gt;.
-         */
-
-        inline : function()
-        {
-            if (is.empty && words.text.length == 1)
-            {
-                opt.selection.start = words.start;
-                opt.selection.end = words.end;
-                opt.selection.text = words.text.join(' ');
-            }
-
-            var r = !is.whitespace && is.inline ? 
-                opt.before + opt.selection.text + opt.after : 
-                opt.selection.text + opt.before + opt.after;
-
-            insert(r);
-        },
-
-        /**
-         * Formats a heading.
-         */
-        
-        heading : function()
-        {
-            var line = lines.text.join("\n");
-            var s = line.substr(0,3);
-
-            if (jQuery.inArray(s, ['h1.', 'h2.', 'h3.', 'h4.', 'h5.', 'h6.']) >= 0)
-            {
-                s = s == 'h6.' ? 1 : parseInt(s.substr(1,1)) + 1;
-                insert(s, lines.start+1, lines.start+2);
-                opt.selection.end = lines.start+line.length;
-                return;
-            }
-
             insert(
-                opt.level +'. ' + line + (!is.paragraph ? "\n\n" : ''),
+                'bc. ' + $.trim(lines.text.join("\n")),
                 lines.start, 
                 lines.end
             );
-        },
 
-        /**
-         * Formats a block.
-         */
+            return;
+        }
 
-        block : function()
+        format.inline();
+    };
+
+    /**
+     * Formats a list such as &lt;ul&gt; and &lt;ol&gt;.
+     */
+
+    format.list = function ()
+    {
+        var out = [];
+
+        $.each(lines.text, function (key, line)
         {
-            insert(
-                opt['tag'] +'. ' + $.trim(lines.text.join("\n")) + 
-                (!is.paragraph ? "\n\n" : ''),
-                lines.start, 
-                lines.end
-            );
-        },
+            out.push(((is.linefirst && is.empty) || $.trim(line) ? opt.bullet + ' ' : '') + line);
+        });
 
-        /**
-         * Formats an image.
-         *
-         * @todo Not implemented
-         */
+        out = out.join("\n");
+        insert(out, lines.start, lines.end);
+        opt.selection.end = lines.start + out.length;
+    };
 
-        image : function()
+    /**
+     * Formats simple inline tags.
+     *
+     * Works for elements such as &lt;strong&gt;, &lt;bold&gt;, 
+     * &lt;em&gt;, &lt;ins&gt;, &lt;del&gt;.
+     */
+
+    format.inline = function ()
+    {
+        if (is.empty && words.text.length == 1)
         {
-        },
+            opt.selection.start = words.start;
+            opt.selection.end = words.end;
+            opt.selection.text = words.text.join(' ');
+        }
 
-        /**
-         * Formats a link.
-         */
+        var r = !is.whitespace && is.inline ? 
+            opt.before + opt.selection.text + opt.after : 
+            opt.selection.text + opt.before + opt.after;
 
-        link : function()
+        insert(r);
+    };
+
+    /**
+     * Formats a heading.
+     */
+
+    format.heading = function ()
+    {
+        var line = lines.text.join("\n");
+        var s = line.substr(0,3);
+
+        if (jQuery.inArray(s, ['h1.', 'h2.', 'h3.', 'h4.', 'h5.', 'h6.']) >= 0)
         {
-            var text = opt.selection.text;
-            var link = 'http://';
+            s = s == 'h6.' ? 1 : parseInt(s.substr(1,1)) + 1;
+            insert(s, lines.start+1, lines.start+2);
+            opt.selection.end = lines.start+line.length;
+            return;
+        }
 
-            if (is.empty && words.text.length == 1)
+        insert(
+            opt.level +'. ' + line + (!is.paragraph ? "\n\n" : ''),
+            lines.start, 
+            lines.end
+        );
+    };
+
+    /**
+     * Formats a block.
+     */
+
+    format.block = function ()
+    {
+        insert(
+            opt['tag'] +'. ' + $.trim(lines.text.join("\n")) + 
+            (!is.paragraph ? "\n\n" : ''),
+            lines.start, 
+            lines.end
+        );
+    };
+
+    /**
+     * Formats an image.
+     *
+     * @todo Not implemented
+     */
+
+    format.image = function ()
+    {
+    };
+
+    /**
+     * Formats a link.
+     */
+
+    format.link = function ()
+    {
+        var text = opt.selection.text, link = 'http://';
+
+        if (is.empty && words.text.length == 1)
+        {
+            opt.selection.start = words.start;
+            opt.selection.end = words.end;
+            text = words.text.join(' ');
+        }
+
+        if (text.indexOf('http://') == 0 || text.indexOf('https://') == 0)
+        {
+            link = text;
+            text = '$';
+        }
+        else if (text.indexOf('www.') == 0)
+        {
+            link = 'http://'+text;
+            text = '$';
+        }
+
+        insert('"' + text + '":'+link);
+    };
+
+    /**
+     * Formats an acronym.
+     */
+
+    format.acronym = function ()
+    {
+        var text = opt.selection.text, abc = 'ABC';
+
+        if (is.empty)
+        {
+            if (words.text.length == 1 && words.text[0].length >= 3 && /[:lower:]/.test(words.text[0]) === false)
             {
-                opt.selection.start = words.start;
-                opt.selection.end = words.end;
+                abc = words.text[0];
+            }
+            else
+            {
                 text = words.text.join(' ');
             }
 
-            if (text.indexOf('http://') == 0 || text.indexOf('https://') == 0)
-            {
-                link = text;
-                text = '$';
-            }
-
-            else if(text.indexOf('www.') == 0)
-            {
-                link = 'http://'+text;
-                text = '$';
-            }
-
-            insert('"' + text + '":'+link);
-        },
-
-        /**
-         * Formats an acronym.
-         */
-
-        acronym : function()
-        {
-            var text = opt.selection.text;
-            var abc = 'ABC';
-
-            if (is.empty)
-            {
-                if(words.text.length == 1 && words.text[0].length >= 3 && /[:lower:]/.test(words.text[0]) === false)
-                {
-                    abc = words.text[0];
-                }
-                else
-                {
-                    text = words.text.join(' ');
-                }
-
-                opt.selection.start = words.start;
-                opt.selection.end = words.end;
-            }
-
-            insert(abc+'('+text+')');
+            opt.selection.start = words.start;
+            opt.selection.end = words.end;
         }
+
+        insert(abc+'('+text+')');
     };
 
     $.fn.cotton = function (method, options)

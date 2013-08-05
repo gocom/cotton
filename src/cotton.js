@@ -1,7 +1,7 @@
 /**
  * Cotton.js - Textile quick tag bar
  *
- * @link    https://github.com/gocom/cotton.js
+ * @link    https://github.com/gocom/cotton
  * @license MIT
  */
 

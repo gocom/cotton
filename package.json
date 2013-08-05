@@ -1,0 +1,43 @@
+{
+    "name": "cotton",
+    "title": "Cotton.js",
+    "description": "",
+    "version": "0.0.0",
+    "homepage": "https://github.com/gocom/cotton",
+    "author": {
+        "name": "Jukka Svahn",
+        "url": "https://github.com/gocom"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gocom/cotton.git"
+    },
+    "bugs": {
+        "url": "https://github.com/gocom/cotton/issues"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/gocom/cotton/blob/master/LICENSE"
+        }
+    ],
+    "devDependencies": {
+        "grunt": "0.4.1",
+        "grunt-cli": "~0.1",
+        "grunt-contrib-uglify": "0.2.2",
+        "grunt-contrib-jshint": "0.6.2",
+        "grunt-contrib-watch": "0.5.1",
+        "grunt-bumpup": "0.2.0",
+        "grunt-tagrelease": "0.2.0",
+        "grunt-contrib-compress": "0.5.2"
+    },
+    "keywords": [
+        "jquery",
+		"textile",
+		"markup",
+		"syntax",
+		"quick",
+		"editing",
+		"bar"
+    ]
+}

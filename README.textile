@@ -1,3 +1,16 @@
 h1. Cotton.js
 
 Dream would be have no dialogs, smart buttons, multi-line support, only one heading and one codeblock button. An editor should make editing easier and user-friendlier, not slower. *Currently work in progress*.
+
+h2. Build
+
+Cotton.js uses "Grunt":http://gruntjs.com to run tasks. First make sure that you have all base dependencies installed by running npm in the repository's directory:
+
+bc. $ cd amata
+$ npm install
+
+After you have installed all dependencies, you will be able to run tasks using Grunt, like building and testing:
+
+bc. $ grunt [task]
+
+Where the @[task]@ is one of @watch@, @test@, @build@ or @release[:patch | :minor | :major]@.

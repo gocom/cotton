@@ -381,6 +381,13 @@
         insert(abc+'('+text+')');
     };
 
+    /**
+     * Renders a Textile editing bar.
+     *
+     * @param {String} [method='init'] Called method
+     * @param {Object} [options={}]    Options passed to the method
+     */
+
     $.fn.cotton = function (method, options)
     {
         if ($.type(method) !== 'string' || $.type(methods[method]) !== 'function')

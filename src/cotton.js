@@ -306,16 +306,6 @@
     };
 
     /**
-     * Formats an image.
-     *
-     * @todo Not implemented
-     */
-
-    format.image = function ()
-    {
-    };
-
-    /**
      * Formats a link.
      */
 

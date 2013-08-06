@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Cotton.js</title>
+</head>
+<body>
+    <form method="post" action="#">
+
+        <p class="cotton">
+            <a href="#body" data-cotton-callback="inline" data-cotton-before="*" data-cotton-after="*" data-cotton-shortcut="b">Strong</a>
+            <a href="#body" data-cotton-callback="inline" data-cotton-before="_" data-cotton-after="_">Em</a>
+            <a href="#body" data-cotton-callback="inline" data-cotton-before="+" data-cotton-after="+">Ins</a>
+            <a href="#body" data-cotton-callback="inline" data-cotton-before="-" data-cotton-after="-">Del</a>
+            <a href="#body" data-cotton-callback="link">www</a>
+            <a href="#body" data-cotton-callback="list" data-cotton-bullet="*">Ul</a>
+            <a href="#body" data-cotton-callback="list" data-cotton-bullet="#">Ol</a>
+            <a href="#body" data-cotton-callback="code" data-cotton-before="@" data-cotton-after="@">Code</a>
+            <a href="#body" data-cotton-callback="block" data-cotton-tag="bq">Blockquote</a>
+            <a href="#body" data-cotton-callback="block" data-cotton-tag="pre">Pre</a>
+            <a href="#body" data-cotton-callback="heading" data-cotton-tag="h2">h#.</a>
+            <a href="#body" data-cotton-callback="acronym">ABC</a>
+            <a href="#body" data-cotton-callback="inline" data-cotton-before="!" data-cotton-after="!">Img</a>
+        </p>
+
+        <p><textarea id="body" name="body" rows="15" cols="30"></textarea></p>
+    </form>
+
+    <!--
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="../src/cotton.js"></script>
+    <script>
+        $('.cotton a').cotton();
+    </script>
+    -->
+</body>
+</html>

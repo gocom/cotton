@@ -52,9 +52,9 @@
 
             $.each(this.attributes, function(index, attr)
             {
-                if (attr.name.indexOf('data-') === 0)
+                if (attr.name.indexOf('data-cotton-') === 0)
                 {
-                    opt[attr.name.substr(5)] = attr.value;
+                    opt[attr.name.substr(12)] = attr.value;
                 }
             });
 

@@ -136,22 +136,15 @@
     
             is.block = (!is.paragraph && c.indexOf("\n", offset) >= 0 || c.indexOf("\r\n", offset) >= 0);
 
-            if (!format[opt.callback])
+            if (format[opt.callback])
             {
-                return;
+                format[opt.callback]();
+
+                methods.caret.apply(opt.field, [{
+                    start : opt.selection.end, 
+                    end : opt.selection.end
+                }]);
             }
-
-            var f = format[opt.callback]();
-
-            if (f)
-            {
-                opt.field.val(f);
-            }
-
-            methods.caret.apply(opt.field, [{
-                start : opt.selection.end, 
-                end : opt.selection.end
-            }]);
         });
     };
   

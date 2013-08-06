@@ -42,7 +42,7 @@
 {
     'use strict';
 
-    var opt = {}, is = {}, words = {}, lines = {}, methods = {}, format = {}, regexLine = /\r\n|\r|\n/;
+    var opt = {}, field, selection, is = {}, words = {}, lines = {}, methods = {}, format = {}, regexLine = /\r\n|\r|\n/;
 
     methods.init = function ()
     {
@@ -58,25 +58,25 @@
                 }
             });
 
-            opt.field = $($(this).attr('href'));
-            opt.field.focus();
-            opt.selection = methods.caret.apply(opt.field);
+            field = $($(this).attr('href'));
+            field.focus();
+            selection = methods.caret.apply(field);
 
             words = { start : 0, end : 0, text : [] };
             lines = { start : 0, end : 0, text : [] };
 
             var i = 0, ls = 0, le = 0;
 
-            $.each(opt.field.val().split(regexLine), function(index, line)
+            $.each(field.val().split(regexLine), function(index, line)
             {
-                if (ls > opt.selection.end)
+                if (ls > selection.end)
                 {
                     return false;
                 }
 
                 le = ls+line.length;
                         
-                if (le >= opt.selection.start)
+                if (le >= selection.start)
                 {
                     if (!lines.text[0])
                     {
@@ -91,12 +91,12 @@
 
                 $.each(line.split(' '), function(index, w)
                 {
-                    if (i > opt.selection.end)
+                    if (i > selection.end)
                     {
                         return;
                     }
 
-                    if (i+w.length >= opt.selection.start)
+                    if (i+w.length >= selection.start)
                     {
                         if (!words.text[0])
                         {
@@ -111,22 +111,22 @@
                 });
             });
 
-            if (opt.selection.start)
+            if (selection.start)
             {
-                opt.selection.characterBefore = opt.field.val().substr(opt.selection.start-1, 1);
-                is.linefirst = opt.selection.characterBefore === '\n';
+                selection.characterBefore = field.val().substr(selection.start-1, 1);
+                is.linefirst = selection.characterBefore === '\n';
             }
             else
             {
-                opt.selection.characterBefore = '';
+                selection.characterBefore = '';
                 is.linefirst = true;
             }
 
-            is.empty = (!opt.selection.text);
-            is.whitespace = (!is.empty && !$.trim(opt.selection.text));
-            is.inline = (opt.selection.text.indexOf('\n') === -1);
+            is.empty = (!selection.text);
+            is.whitespace = (!is.empty && !$.trim(selection.text));
+            is.inline = (selection.text.indexOf('\n') === -1);
  
-            var offset = lines.end, c = opt.field.val();
+            var offset = lines.end, c = field.val();
 
             is.paragraph = c.indexOf('\n\n', offset) !== -1 || c.indexOf('\r\n\r\n', offset) !== -1;
             is.block = (!is.paragraph && c.indexOf('\n', offset) !== -1); // TODO: Not needed?
@@ -135,9 +135,9 @@
             {
                 format[opt.callback]();
 
-                methods.caret.apply(opt.field, [{
-                    start : opt.selection.end,
-                    end : opt.selection.end
+                methods.caret.apply(field, [{
+                    start : selection.end,
+                    end : selection.end
                 }]);
             }
         });
@@ -193,16 +193,16 @@
     {
         if ($.type(start) === 'undefined')
         {
-            start = opt.selection.start;
+            start = selection.start;
         }
 
         if ($.type(end) === 'undefined')
         {
-            end = opt.selection.end;
+            end = selection.end;
         }
 
-        opt.field.val(opt.field.val().substring(0, start) + string + opt.field.val().substring(end));
-        opt.selection.end = start + string.length;
+        field.val(field.val().substring(0, start) + string + field.val().substring(end));
+        selection.end = start + string.length;
     };
 
     /**
@@ -240,7 +240,7 @@
 
         out = out.join('\n');
         insert(out, lines.start, lines.end);
-        opt.selection.end = lines.start + out.length;
+        selection.end = lines.start + out.length;
     };
 
     /**
@@ -254,18 +254,18 @@
     {
         if (is.empty && words.text.length === 1)
         {
-            opt.selection.start = words.start;
-            opt.selection.end = words.end;
-            opt.selection.text = words.text.join(' ');
+            selection.start = words.start;
+            selection.end = words.end;
+            selection.text = words.text.join(' ');
         }
 
         if (!is.whitespace && is.inline)
         {
-            insert(opt.before + opt.selection.text + opt.after);
+            insert(opt.before + selection.text + opt.after);
         }
         else
         {
-            insert(opt.selection.text + opt.before + opt.after);
+            insert(selection.text + opt.before + opt.after);
         }
     };
 
@@ -289,7 +289,7 @@
             }
 
             insert(start, lines.start + 1, lines.start + 2);
-            opt.selection.end = lines.start + line.length;
+            selection.end = lines.start + line.length;
             return;
         }
 
@@ -311,12 +311,12 @@
 
     format.link = function ()
     {
-        var text = opt.selection.text, link = 'http://';
+        var text = selection.text, link = 'http://';
 
         if (is.empty && words.text.length === 1)
         {
-            opt.selection.start = words.start;
-            opt.selection.end = words.end;
+            selection.start = words.start;
+            selection.end = words.end;
             text = words.text.join(' ');
         }
 
@@ -340,7 +340,7 @@
 
     format.acronym = function ()
     {
-        var text = opt.selection.text, abc = 'ABC';
+        var text = selection.text, abc = 'ABC';
 
         if (is.empty)
         {
@@ -353,8 +353,8 @@
                 text = words.text.join(' ');
             }
 
-            opt.selection.start = words.start;
-            opt.selection.end = words.end;
+            selection.start = words.start;
+            selection.end = words.end;
         }
 
         insert(abc+'('+text+')');

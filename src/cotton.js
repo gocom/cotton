@@ -364,6 +364,10 @@
             link = 'http://'+text;
             text = '$';
         }
+        else if (text.indexOf('@') !== -1)
+        {
+            link = 'mailto:'+text;
+        }
 
         insert('"' + text + '":'+link);
     };

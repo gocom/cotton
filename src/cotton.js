@@ -46,6 +46,23 @@
 
     methods.init = function ()
     {
+        this.each(function ()
+        {
+            var $this = $(this), shortcut = $(this).data('cotton-shortcut');
+
+            if (shortcut)
+            {
+                $($this.attr('href')).on('keydown', function (e)
+                {
+                    if (e.ctrlKey && String.fromCharCode(e.which).toLowerCase() === shortcut)
+                    {
+                        e.preventDefault();
+                        $this.trigger('click.cotton');
+                    }
+                });
+            }
+        });
+
         return this.on('click.cotton', function (e)
         {
             e.preventDefault();

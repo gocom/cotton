@@ -147,7 +147,7 @@
             }
         });
     };
-  
+
     /**
      * Caret code based on jCaret
      * @author C. F., Wong (Cloudgen)
@@ -157,7 +157,7 @@
      * Licensed under the MIT License:
      * http://www.opensource.org/licenses/mit-license.php
      */
-    
+
     methods.caret = function(options)
     {
         var $this = this.get(0), start = 0, end = 0;

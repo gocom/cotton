@@ -42,7 +42,7 @@
 {
     'use strict';
 
-    var opt = {}, is = {}, form = {}, words = {}, lines = {}, methods = {}, format = {}, regexLine = /\r\n|\r|\n/;
+    var opt = {}, is = {}, words = {}, lines = {}, methods = {}, format = {}, regexLine = /\r\n|\r|\n/;
 
     methods.init = function ()
     {
@@ -111,37 +111,32 @@
                 });
             });
 
-            opt.selection.char_before = (
-                opt.selection.start < 1 ? 
-                    '' : opt.field.val().substr(opt.selection.start-1, 1)
-            );
+            if (opt.selection.start)
+            {
+                opt.selection.characterBefore = opt.field.val().substr(opt.selection.start-1, 1);
+                is.linefirst = opt.selection.characterBefore === '\n';
+            }
+            else
+            {
+                opt.selection.characterBefore = '';
+                is.linefirst = true;
+            }
 
             is.empty = (!opt.selection.text);
             is.whitespace = (!is.empty && !$.trim(opt.selection.text));
-            is.inline = (opt.selection.text.indexOf("\n") == -1);
-    
-            is.linefirst = (
-                opt.selection.start < 1 ||
-                opt.selection.char_before == "\n" || 
-                opt.selection.char_before == "\r"
-            );
-                
-            var offset = lines.end;
-            var c = opt.field.val();
-    
-            is.paragraph = (
-                c.indexOf("\n\n", offset) >= 0 ||
-                c.indexOf("\r\n\r\n", offset) >= 0
-            );
-    
-            is.block = (!is.paragraph && c.indexOf("\n", offset) >= 0 || c.indexOf("\r\n", offset) >= 0);
+            is.inline = (opt.selection.text.indexOf('\n') === -1);
+ 
+            var offset = lines.end, c = opt.field.val();
+
+            is.paragraph = c.indexOf('\n\n', offset) !== -1 || c.indexOf('\r\n\r\n', offset) !== -1;
+            is.block = (!is.paragraph && c.indexOf('\n', offset) !== -1); // TODO: Not needed?
 
             if (format[opt.callback])
             {
                 format[opt.callback]();
 
                 methods.caret.apply(opt.field, [{
-                    start : opt.selection.end, 
+                    start : opt.selection.end,
                     end : opt.selection.end
                 }]);
             }
@@ -220,7 +215,7 @@
         {
             insert(
                 'bc. ' + $.trim(lines.text.join('\n')),
-                lines.start, 
+                lines.start,
                 lines.end
             );
 
@@ -257,18 +252,21 @@
 
     format.inline = function ()
     {
-        if (is.empty && words.text.length == 1)
+        if (is.empty && words.text.length === 1)
         {
             opt.selection.start = words.start;
             opt.selection.end = words.end;
             opt.selection.text = words.text.join(' ');
         }
 
-        var r = !is.whitespace && is.inline ? 
-            opt.before + opt.selection.text + opt.after : 
-            opt.selection.text + opt.before + opt.after;
-
-        insert(r);
+        if (!is.whitespace && is.inline)
+        {
+            insert(opt.before + opt.selection.text + opt.after);
+        }
+        else
+        {
+            insert(opt.selection.text + opt.before + opt.after);
+        }
     };
 
     /**
@@ -277,22 +275,25 @@
 
     format.heading = function ()
     {
-        var line = lines.text.join('\n');
-        var s = line.substr(0,3);
+        var line = lines.text.join('\n'), start = line.substr(0, 3);
 
-        if (jQuery.inArray(s, ['h1.', 'h2.', 'h3.', 'h4.', 'h5.', 'h6.']) >= 0)
+        if ($.inArray(start, ['h1.', 'h2.', 'h3.', 'h4.', 'h5.', 'h6.']) !== -1)
         {
-            s = s == 'h6.' ? 1 : parseInt(s.substr(1,1)) + 1;
-            insert(s, lines.start+1, lines.start+2);
-            opt.selection.end = lines.start+line.length;
+            if (start === 'h6.')
+            {
+                start = 1;
+            }
+            else
+            {
+                start = parseInt(start.substr(1, 1), 10) + 1;
+            }
+
+            insert(start, lines.start + 1, lines.start + 2);
+            opt.selection.end = lines.start + line.length;
             return;
         }
 
-        insert(
-            opt.level +'. ' + line + (!is.paragraph ? '\n\n' : ''),
-            lines.start, 
-            lines.end
-        );
+        format.block();
     };
 
     /**
@@ -301,12 +302,7 @@
 
     format.block = function ()
     {
-        insert(
-            opt['tag'] +'. ' + $.trim(lines.text.join('\n')) + 
-            (!is.paragraph ? '\n\n' : ''),
-            lines.start,
-            lines.end
-        );
+        insert(opt.tag +'. ' + $.trim(lines.text.join('\n')) + (!is.paragraph ? '\n\n' : ''), lines.start, lines.end);
     };
 
     /**
@@ -327,19 +323,19 @@
     {
         var text = opt.selection.text, link = 'http://';
 
-        if (is.empty && words.text.length == 1)
+        if (is.empty && words.text.length === 1)
         {
             opt.selection.start = words.start;
             opt.selection.end = words.end;
             text = words.text.join(' ');
         }
 
-        if (text.indexOf('http://') == 0 || text.indexOf('https://') == 0)
+        if (text.indexOf('http://') === 0 || text.indexOf('https://') === 0)
         {
             link = text;
             text = '$';
         }
-        else if (text.indexOf('www.') == 0)
+        else if (text.indexOf('www.') === 0)
         {
             link = 'http://'+text;
             text = '$';
@@ -358,7 +354,7 @@
 
         if (is.empty)
         {
-            if (words.text.length == 1 && words.text[0].length >= 3 && /[:lower:]/.test(words.text[0]) === false)
+            if (words.text.length === 1 && words.text[0].length >= 3 && /[:lower:]/.test(words.text[0]) === false)
             {
                 abc = words.text[0];
             }

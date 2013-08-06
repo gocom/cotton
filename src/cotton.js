@@ -219,7 +219,7 @@
         if ((is.linefirst && is.empty) || !is.inline)
         {
             insert(
-                'bc. ' + $.trim(lines.text.join("\n")),
+                'bc. ' + $.trim(lines.text.join('\n')),
                 lines.start, 
                 lines.end
             );
@@ -243,7 +243,7 @@
             out.push(((is.linefirst && is.empty) || $.trim(line) ? opt.bullet + ' ' : '') + line);
         });
 
-        out = out.join("\n");
+        out = out.join('\n');
         insert(out, lines.start, lines.end);
         opt.selection.end = lines.start + out.length;
     };
@@ -277,7 +277,7 @@
 
     format.heading = function ()
     {
-        var line = lines.text.join("\n");
+        var line = lines.text.join('\n');
         var s = line.substr(0,3);
 
         if (jQuery.inArray(s, ['h1.', 'h2.', 'h3.', 'h4.', 'h5.', 'h6.']) >= 0)
@@ -289,7 +289,7 @@
         }
 
         insert(
-            opt.level +'. ' + line + (!is.paragraph ? "\n\n" : ''),
+            opt.level +'. ' + line + (!is.paragraph ? '\n\n' : ''),
             lines.start, 
             lines.end
         );
@@ -302,9 +302,9 @@
     format.block = function ()
     {
         insert(
-            opt['tag'] +'. ' + $.trim(lines.text.join("\n")) + 
-            (!is.paragraph ? "\n\n" : ''),
-            lines.start, 
+            opt['tag'] +'. ' + $.trim(lines.text.join('\n')) + 
+            (!is.paragraph ? '\n\n' : ''),
+            lines.start,
             lines.end
         );
     };

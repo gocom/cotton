@@ -144,10 +144,39 @@
     };
 
     /**
-     * Caret code based on jCaret
-     * @author C. F., Wong (Cloudgen)
-     * @link http://code.google.com/p/jcaret/
+     * Interacts with the current selection within a textarea.
      *
+     * This method can be used to set and get the
+     * current caret position or the selection range.
+     *
+     * If <code>options.start</code> is set, the method will
+     * set the selection range or position, depending on the
+     * given options. If <code>options.end</code> too is specified,
+     * the range will be selected. If <code>options.end</code> is
+     * not specified, the caret is moved, without noting being
+     * selected.
+     *
+     * If <code>options.start</code> and <code>options.end</code>
+     * both are not specified, then function will return the current
+     * selection as an object, consisting of properties <code>start</code>,
+     * <code>end</code> and <code>text</code>.
+     *
+     * This method's code is based on jCaret by
+     * Cloudgen.
+     *
+     * @param  {Integer} [options.start] Sets selection start
+     * @param  {Integer} [options.end]   Sets selection end
+     * @return {Object}
+     * @author C. F., Wong (Cloudgen)
+     * @link   http://code.google.com/p/jcaret/
+     * @example
+     * $('textarea#description').cotton('caret', {
+     *     start : 1,
+     *     end   : 5
+     * });
+     */
+
+    /*
      * Copyright (c) 2010 C. F., Wong (http://cloudgen.w0ng.hk)
      * Licensed under the MIT License:
      * http://www.opensource.org/licenses/mit-license.php
@@ -155,13 +184,18 @@
 
     methods.caret = function (options)
     {
+        options = $.extend({
+            start : null,
+            end   : 0
+        }, options);
+
         var $this = this.get(0), start = 0, end = 0;
 
-        if ($.type(options) === 'object' && $.type(options.start) === 'number' && $.type(options.end) === 'number')
+        if (options.start !== null)
         {
             if ($.type($this.setSelectionRange) !== 'undefined')
             {
-                $this.setSelectionRange(options.start, options.end);
+                $this.setSelectionRange(options.start, Math.max(options.end, options.start));
                 this.eq(0).focus();
             }
 

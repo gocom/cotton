@@ -42,7 +42,7 @@
 {
     'use strict';
 
-    var opt = {}, is = {}, form = {}, words = {}, lines = {}, methods = {}, format = {};
+    var opt = {}, is = {}, form = {}, words = {}, lines = {}, methods = {}, format = {}, regexLine = /\r\n|\r|\n/;
 
     methods.init = function ()
     {
@@ -67,7 +67,7 @@
 
             var i = 0, ls = 0, le = 0;
 
-            $.each(opt.field.val().split(/\r\n|\r|\n/), function(index, line)
+            $.each(opt.field.val().split(regexLine), function(index, line)
             {
                 if (ls > opt.selection.end)
                 {

@@ -153,7 +153,7 @@
      * http://www.opensource.org/licenses/mit-license.php
      */
 
-    methods.caret = function(options)
+    methods.caret = function (options)
     {
         var $this = this.get(0), start = 0, end = 0;
 
@@ -189,7 +189,7 @@
      * @param {integer} end
      */
 
-    var insert = function(string, start, end)
+    var insert = function (string, start, end)
     {
         if ($.type(start) === 'undefined')
         {

@@ -1,0 +1,798 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+html {
+    font-size: 1.75em;
+}
+
+body {
+    background: #fff;
+    color: #666;
+    line-height: 1.714; /* 28/48 */
+}
+
+body, textarea, table, pre, select, input, button { 
+    font-size: 1em;
+    font-family: "PT Sans", Helvetica, Arial, sans-serif;
+}
+
+main, footer {
+    padding: 0 10% 2em 10%;
+    display: block;
+    max-width: 35em;
+    margin: auto;
+}
+
+/**
+ * Code display.
+ */
+
+code a,
+code a:hover {
+    color: inherit;
+    cursor: help;
+    text-decoration: none;
+}
+
+pre, code {
+    color: #9da8ab;
+    font-family: Inconsolata, "Courier New", Consolas, Courier, monospace;
+    font-size: 1em;
+}
+
+pre {
+    background: #daeffa;
+    padding: 1em;
+    border: 1px solid #d0e8f0;
+    border-radius: 0.25em;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+pre code {
+    background: transparent;
+}
+
+pre .badge {
+    margin: 0;
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+    background: #ccc;
+}
+
+/**
+ * Syntax highlight.
+ */
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #998;
+}
+
+.support {
+    color: #0086b3;
+}
+
+.token.punctuation {
+    color: #9da8ab;
+}
+
+.token.namespace {
+    color: #333;
+}
+
+.token.function {
+    color: #900;
+}
+
+.token.class {
+    color: #458;
+}
+
+.token.property {
+    font-weight: bold;
+}
+
+.token.boolean,
+.token.number {
+    font-weight: normal;
+    color: #099;
+}
+
+.token.tag {
+    color: navy;
+}
+
+.token.attr-name {
+    color: teal;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.selector,
+.token.string {
+    font-weight: normal;
+    color: #d14;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+    color: #a67f59;
+}
+
+.token.keyword {
+    font-weight: bold;
+}
+
+.token.regex,
+.token.important {
+    color: #009926;
+}
+
+.token.important {
+    font-weight: bold;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+/**
+ * Definition lists.
+ */
+
+dl {
+    border: 1px solid #ddd;
+    border-radius: 0.25em;
+}
+
+dt {
+    border-top: 1px solid #ddd;
+    padding: 1em 2em 0 2em;
+    font-weight: bold;
+}
+
+dd {
+    padding: 0 2em 1em 2em;
+}
+
+dd pre {
+    margin: 0.5em -2em -1em -2em;
+    border-radius: 0;
+    padding: 0.5em 2em;
+    background: transparent;
+    border: 0;
+    border-top: 1px dotted #ddd;
+}
+
+dd pre > code {
+    margin: 0 0 0 0.5em;
+}
+
+dl > dt:first-child {
+    border-top: 0;
+}
+
+/**
+ * Element signature.
+ */
+
+.signature {
+    border-radius: 0.25em 0.25em 0 0;
+}
+
+.returns {
+    margin: 0;
+    border: 1px solid #ddd;
+    border-top: 0;
+    line-height: 1;
+    border-radius: 0 0 0.25em 0.25em;
+    color: #9da8ab;
+    overflow: hidden;
+    padding: 1em;
+}
+
+.returns b {
+    line-height: 1.85;
+}
+
+.returns i, .returns b {
+    float: left;
+    margin: 0 0.3em 0 0;
+}
+
+.returns span {
+    float: left;
+    margin: -0.4em 0 -0.4em 0.3em;
+    border-left: 1px solid #ddd;
+    padding: 0.4em;
+}
+
+/**
+ * Clearfix.
+ */
+
+.clearfix:after, dl:after
+{
+    content: " ";
+    clear: both;
+    display: table;
+}
+
+/**
+ * Links
+ */
+
+a {
+    color: #37bddb;
+    transition: color 0.5s;
+}
+
+a:hover {
+    color: #1d97b3;
+}
+
+a:focus {
+    color: #000;
+}
+
+/**
+ * Inline.
+ */
+
+strong, b {
+    font-weight: bold;
+}
+
+small {
+    font-size: 0.75em;
+}
+
+/**
+ * Typo.
+ */
+
+p, h1, h2, h3, h4, h5, h6, pre, blockquote, table, dl {
+    margin: 2em 0 0 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 2.4em;
+}
+
+h2 {
+    font-size: 2em;
+    border-bottom: 1px solid #ddd;
+}
+
+h3 {
+    font-size: 1.6em;
+}
+
+h4 {
+    font-size: 1.3em;
+}
+
+h5 {
+    font-size: 1.2em;
+}
+
+h6 {
+    font-size: 1.1em;
+}
+
+img {
+    border-radius: 0.25em;
+    padding: 0.6em;
+    border: 1px solid #ddd;
+    box-shadow: 0 0.2em 0.3em rgba(0, 0, 0, 0.05);
+    max-width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+/**
+ * Forms.
+ */
+
+textarea {
+    padding: 1em;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: #ccc;
+    width: 100%;
+    box-sizing: border-box;
+    color: inherit;
+}
+
+/**
+ * Demo.
+ */
+
+.demo {
+    margin: 2em 0 0 0;
+}
+
+.demo p {
+    margin: 0;
+}
+
+.demo textarea {
+}
+
+/**
+ * Cotton.
+ */
+
+.cotton {
+    box-shadow: 0 -0.1em 0.3em rgba(0, 0, 0, 0.1), 0 -1px 0 rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    background: -webkit-linear-gradient(top, #efefef, #ddd);
+    border-radius: 0.25em 0.25em 0 0;
+    background-clip: padding-box;
+    line-height: 1;
+    overflow: hidden;
+}
+
+.cotton a {
+    text-decoration: none;
+    font-size: 0.7em;
+    padding: 1em 0.5em;
+    color: #666;
+    float: left;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+    width: 8%;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.cotton a:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.cotton a:focus {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.cotton a:first-child {
+    border-left: 0;
+    padding-left: 1em;
+}
+
+.cotton a:last-child {
+    border-right: 0;
+    padding-right: 1em;
+}
+
+/**
+ * Header.
+ */
+
+header {
+    text-align: center;
+    padding: 5.5em 10% 3em 10%;
+    background: #eee no-repeat 50% 50%;
+    background-size: cover;
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.6), 0 0 1px rgba(0, 0, 0, 0.9);
+    box-sizing: border-box;
+}
+
+header h1 {
+    margin: 0;
+    line-height: 1;
+    font: 4em Ubuntu, Helvetica, sans-serif;
+    font-weight: 700;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.5s;
+    min-height: 1.25em;
+    color: #fff;
+}
+
+.wf-active header h1 {
+    opacity: 1;
+}
+
+header h1 a,
+header h1 a:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+header .slogan {
+    margin: 0 0 1em 0;
+    color: #9da8ab;
+}
+
+header .social {
+    margin: 0;
+}
+
+header .social a {
+    padding: 0.1em 0.6em;
+    font-size: 0.5em;
+}
+
+/**
+ * Navigation.
+ */
+
+nav {
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.05em 0.2em rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    z-index: 5;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav li {
+    display: inline-block;
+    line-height: 1;
+}
+
+nav a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 0.857em;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0 0.5em;
+    line-height: 4.750;
+    display: inline-block;
+}
+
+.menuOpen nav {
+    display: block;
+    position: fixed;
+}
+
+#toggle {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    font-size: 0.857em;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+    width: 10%;
+}
+
+#toggle a {
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+    background: #fff;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 0.5em 0.8em rgba(0, 0, 0, 0.05);
+    border-radius: 0 0 0.25em 0.25em;
+    padding: 0.5em;
+    transition: padding 0.5s;
+}
+
+.menuOpen #toggle a {
+    padding-top: 5.250em;
+}
+
+/**
+ * Footer.
+ */
+
+footer > p:first-child {
+    border-top: 1px solid #ddd;
+    padding-top: 2em;
+    margin: 0;
+}
+
+footer .copy {
+    color: #9da8ab;
+    font-size: 0.857em;
+    border-top: 1px solid #ddd;
+    padding: 2em 0 0 0;
+}
+
+/**
+ * Buttons.
+ */
+
+.button {
+    background: #37BDDB;
+    color: #fff;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 0.3em;
+    display: inline-block;
+    box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s;
+}
+
+.light {
+    background: #fff;
+    color: inherit;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.button[href*="gittip.com"] {
+    background: #a4db37;
+    color: #fff;
+    border: 0;
+    border: 1px solid #97c932;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.button:hover,
+.button:focus {
+    color: #fff;
+    background: #000;
+    border-color: #000;
+}
+
+/**
+ * Download bar.
+ */
+
+.download {
+    margin: 0;
+    min-height: 3.5em;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.wf-active .download {
+    opacity: 1;
+}
+
+.download code {
+    padding: 0 1em;
+    display: inline-block;
+    background: #daeffa;
+    margin: 0;
+    border-radius: 0.3em;
+    padding: 0.5em 1em;
+}
+
+.download-notes {
+    font-size: 0.65em;
+    margin: 0 0 1em 0;
+    color: #9da8ab;
+}
+
+.download-notes a {
+    color: inherit;
+}
+
+.download-notes a:hover,
+.download-notes a:focus {
+    color: #000;
+}
+
+.download code, .download .button {
+    margin: 0 0 0.5em 0;
+}
+
+/**
+ * Download preparer.
+ */
+
+#download-widget h1 {
+    font-size: 2em;
+    border-bottom: 1px solid #ddd;
+    margin: 0 0 0.5em 0;
+}
+
+#download-widget p {
+    margin: 0;
+    font-size: 0.857em;
+}
+
+#download-widget .back {
+    margin: 2em 0 1em 0;
+}
+
+/**
+ * Badges.
+ */
+
+.badge {
+    padding: 0 0.5em;
+    font-size: 0.6em;
+    background: #9da8ab;
+    color: #fff;
+    border-radius: 0.3em;
+    display: inline-block;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+/**
+ * Author.
+ */
+
+.author {
+    border-top: 1em solid #d0e8f0;
+    text-align: center;
+    margin: 5em 0 0 0;
+    padding: 2em 0 0 0;
+    font-size: 0.857em;
+    position: relative;
+}
+
+.author .face {
+    height: 135px;
+    background: url("http://uproar-n-rattle.biz/img/avatar.png") no-repeat 50% 50%;
+    position: absolute;
+    top: -4em;
+    left: 0;
+    right: 0;
+}
+
+.profile-links a {
+    text-decoration: none;
+    color: #9da8ab;
+    font-size: 1.8em;
+}
+
+.profile-links a:hover,
+.profile-links a:focus {
+    color: #000;
+}
+
+.author p {
+    margin: 0;
+}
+
+/**
+ * 404 page.
+ */
+
+.error-404 header {
+    background-image: none;
+    box-shadow: none;
+    height: 100%;
+}
+
+/**
+ * Animations.
+ */
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    -webkit-animation: fadeIn 0.5s;
+    animation: fadeIn 0.5s;
+}
+
+/**
+ * Responsive overrides.
+ */
+
+@media screen and (max-width: 768px) {
+
+    body {
+        font-size: 1em;
+        line-height: 2;
+    }
+
+    header {
+        padding-top: 1em;
+        padding-bottom: 2em;
+        background-size: cover;
+    }
+
+    header .slogan {
+        margin-top: -1em;
+    }
+
+    .download code,
+    .download-notes {
+        display: none;
+    }
+
+    header .download .button {
+        font-size: 1.375em;
+    }
+
+    header .social {
+        margin: 1em 0 0 0;
+    }
+
+    header .social a {
+        padding: 0.1em 0.6em;
+        font-size: 0.857em;
+    }
+
+	#toggle {
+        z-index: 99;
+        font-size: 1em;
+        width: auto;
+	}
+
+    #toggle a {
+        border-radius: 0 0 0.25em 0;
+    }
+
+    .menuOpen #toggle a {
+        padding: 0.5em;
+    }
+
+    nav {
+        display: none;
+        bottom: 0;
+        position: fixed;
+    }
+
+    nav li, nav a {
+        display: block;
+    }
+
+    nav a {
+        border-bottom: 1px solid #ddd;
+        font-size: 1em;
+    }
+
+    .menuOpen {
+        overflow: hidden;
+    }
+
+    header, main, footer {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    p, h1, h2, h3, h4, h5, h6, pre, blockquote, table, dl {
+        margin: 1.5em 0 0 0;
+    }
+
+    .author {
+        margin: 120px 0 0 0;
+    }
+
+    .author .face {
+        top: -120px;
+    }
+}

@@ -432,7 +432,6 @@ nav {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 0.05em 0.2em rgba(0, 0, 0, 0.1);
     background: #fff;
-    z-index: 5;
 }
 
 nav ul {
@@ -461,6 +460,7 @@ nav a {
     top: 0;
     left: 0;
     right: 0;
+    z-index: 5;
 }
 
 #toggle {

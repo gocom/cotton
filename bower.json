@@ -1,0 +1,12 @@
+{
+    "name": "cotton",
+    "version": "0.0.0",
+    "main": "src/cotton.js",
+    "ignore": [
+        ".*",
+        "test"
+    ],
+    "dependencies": {
+        "jquery": ">=1.7.0"
+    }
+}

@@ -13,10 +13,8 @@ module.exports = function (grunt)
 
         watch: {
             html: {
-                css: {
-                    files: 'src/*.html',
-                    tasks: ['htmlmin']
-                }
+                files: 'src/*.html',
+                tasks: ['htmlmin']
             },
 
             js: {

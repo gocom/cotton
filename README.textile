@@ -2,6 +2,12 @@ h1. Cotton.js
 
 Dream would be have no dialogs, smart buttons, multi-line support, only one heading and one codeblock button. An editor should make editing easier and user-friendlier, not slower. *Currently work in progress*.
 
+h2. Install
+
+Using "Bower":http://bower.io:
+
+bc. $ bower install cotton
+
 h2. Build
 
 Cotton.js uses "Grunt":http://gruntjs.com to run tasks. First make sure that you have all base dependencies installed by running npm in the repository's directory:

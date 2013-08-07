@@ -1,84 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Cotton.js &mdash; Textile Markup Syntax Editor</title>
-
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="/assets/css/main.css" />
-
-</head>
-<body>
-    <header>
-        <h1>Cotton.js</h1>
-
-        <p class="slogan">Editing Textile made accessible</p>
-
-        <p class="download">
-            <code><i class="icon-terminal"></i> bower install cotton</code>
-            <a class="button dld" href="#"><i class="icon-cloud-download"></i> Download</a>
-        </p>
-
-        <p class="download-notes">0.5 kB minified+gzipped, requires <a href="#jquery">jQuery 1.7+</a></p>
-
-    </header>
-
-    <nav>
-        <ul
-            ><li><a href="#"><i class="icon-home"></i></a></li
-            ><li><a href="#features">Features</a></li
-            ><li><a href="#usage">Usage</a></li
-            ><li><a href="#supports">Supports</a></li
-            ><li><a href="#docs">Docs</a></li
-        ></ul>
-    </nav>
-
-    <main>
-
-        <p class="social">
-            <a title="Find and contribute on GitHub" class="button light" href="https://github.com/gocom/cotton"><i class="icon-github"></i> GitHub</a>
-            <a title="Follow on Twitter" class="button light" href="https://twitter.com/gocom"><i class="icon-twitter"></i> Twitter</a>
-            <a title="Support using Gittip" class="button light" href="https://www.gittip.com/gocom/"><i class="icon-gittip"></i> Donate</a>
-        </p>
-
-        <form method="post" action="#" class="demo">
-
-            <p class="cotton">
-                <a href="#body" data-cotton-callback="inline" data-cotton-before="*" data-cotton-after="*" data-cotton-shortcut="b"><b>B</b></a>
-                <a href="#body" data-cotton-callback="inline" data-cotton-before="_" data-cotton-after="_" data-cotton-shortcut="i"><i>I</i></a>
-                <a href="#body" data-cotton-callback="inline" data-cotton-before="+" data-cotton-after="+" data-cotton-shortcut="u"><ins>U</ins></a>
-                <a href="#body" data-cotton-callback="inline" data-cotton-before="-" data-cotton-after="-" data-cotton-shortcut="o"><del>O</del></a>
-                <a href="#body" data-cotton-callback="heading" data-cotton-tag="h2" data-cotton-shortcut="h">h#</a>
-                <a href="#body" data-cotton-callback="link">@</a>
-                <a href="#body" data-cotton-callback="list" data-cotton-bullet="*">*</a>
-                <a href="#body" data-cotton-callback="list" data-cotton-bullet="#">#</a>
-                <a href="#body" data-cotton-callback="code" data-cotton-before="@" data-cotton-after="@">{}</a>
-                <a href="#body" data-cotton-callback="block" data-cotton-tag="bq">&#8217;</a>
-                <a href="#body" data-cotton-callback="acronym">ABC</a>
-                <a href="#body" data-cotton-callback="inline" data-cotton-before="!" data-cotton-after="!">img</a>
-            </p>
-
-            <p><textarea id="body" name="body" rows="4" cols="30">This would be the demo in the future. This page isn't ready yet &mdash; needs build strategy at least.</textarea></p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cotton.js &mdash; Textile Markup Syntax Editor</title><link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.0/css/font-awesome.min.css"><link rel="stylesheet" href="/assets/css/main.css"></head><body><header><h1>Cotton.js</h1><p class="slogan">Editing Textile made accessible</p><p class="download"><code><i class="icon-terminal"></i> bower install cotton</code><a class="button dld" href="#"><i class="icon-cloud-download"></i> Download</a></p><p class="download-notes">0.5 kB minified+gzipped, requires <a href="#jquery">jQuery 1.7+</a></p></header><nav><ul><li><a href="#"><i class="icon-home"></i></a></li><li><a href="#features">Features</a></li><li><a href="#usage">Usage</a></li><li><a href="#supports">Supports</a></li><li><a href="#docs">Docs</a></li></ul></nav><main><p class="social"><a title="Find and contribute on GitHub" class="button light" href="https://github.com/gocom/cotton"><i class="icon-github"></i> GitHub</a> <a title="Follow on Twitter" class="button light" href="https://twitter.com/gocom"><i class="icon-twitter"></i> Twitter</a> <a title="Support using Gittip" class="button light" href="https://www.gittip.com/gocom/"><i class="icon-gittip"></i> Donate</a></p><form method="post" action="#" class="demo"><p class="cotton"><a href="#body" data-cotton-callback="inline" data-cotton-before="*" data-cotton-after="*" data-cotton-shortcut="b"><b>B</b></a> <a href="#body" data-cotton-callback="inline" data-cotton-before="_" data-cotton-after="_" data-cotton-shortcut="i"><i>I</i></a> <a href="#body" data-cotton-callback="inline" data-cotton-before="+" data-cotton-after="+" data-cotton-shortcut="u"><ins>U</ins></a> <a href="#body" data-cotton-callback="inline" data-cotton-before="-" data-cotton-after="-" data-cotton-shortcut="o"><del>O</del></a> <a href="#body" data-cotton-callback="heading" data-cotton-tag="h2" data-cotton-shortcut="h">h#</a> <a href="#body" data-cotton-callback="link">@</a> <a href="#body" data-cotton-callback="list" data-cotton-bullet="*">*</a> <a href="#body" data-cotton-callback="list" data-cotton-bullet="#">#</a> <a href="#body" data-cotton-callback="code" data-cotton-before="@" data-cotton-after="@">{}</a> <a href="#body" data-cotton-callback="block" data-cotton-tag="bq">&#8217;</a> <a href="#body" data-cotton-callback="acronym">ABC</a> <a href="#body" data-cotton-callback="inline" data-cotton-before="!" data-cotton-after="!">img</a></p><p><textarea id="body" name="body" rows="4" cols="30">This would be the demo in the future. This page isn't ready yet &mdash; needs build strategy at least.</textarea></p>
         </form>
 
-        <h2>Features</h2>
-
-        <p>Grid of features.</p>
-
-        <h2>Usage</h2>
-
-        <p><b>Cotton.js</b> can be invoked by initializing its init method. The method should be used to set of links, that will act as the toolbar formatting buttons. The actions that these buttons do when clicked, are configured by defining <code>data</code> attributes in the tags themselves. This allows you to configure any set of formatting actions, or pick only the ones you need for a particular field, without having to write different JavaScript implementations. For instance a field that only allows single line of content, won't need any block tag options. The plugin can be included and invoked by using either browser globals or <a href="#amd">AMD</a>.</p>
-
-        <pre><code class="language-markup">&lt;script src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+        <h2>Features</h2><p>Grid of features.</p><h2>Usage</h2><p><b>Cotton.js</b> can be invoked by initializing its init method. The method should be used to set of links, that will act as the toolbar formatting buttons. The actions that these buttons do when clicked, are configured by defining<code>data</code>attributes in the tags themselves. This allows you to configure any set of formatting actions, or pick only the ones you need for a particular field, without having to write different JavaScript implementations. For instance a field that only allows single line of content, won't need any block tag options. The plugin can be included and invoked by using either browser globals or <a href="#amd">AMD</a>.</p><pre><code class="language-markup">&lt;script src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;cotton.js&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
     $('.cotton a').cotton();
-&lt;/script&gt;</code></pre>
-
-        <p>The above will include jQuery library and then the plugin source from <code>cotton.js</code> file. The plugin is initialized and set to use <code>.cotton a</code> elements as its formatting buttons. Set of example buttons could look something like this:</p>
-
-        <pre><code class="language-markup">&lt;p class="cotton"&gt;
+&lt;/script&gt;</code></pre><p>The above will include jQuery library and then the plugin source from<code>cotton.js</code>file. The plugin is initialized and set to use<code>.cotton a</code>elements as its formatting buttons. Set of example buttons could look something like this:</p><pre><code class="language-markup">&lt;p class="cotton"&gt;
     &lt;a href="#body" data-cotton-callback="inline" data-cotton-before="*" data-cotton-after="*" data-cotton-shortcut="b">&lt;b&gt;B&lt;/b&gt;&lt;/a&gt;
     &lt;a href="#body" data-cotton-callback="inline" data-cotton-before="_" data-cotton-after="_" data-cotton-shortcut="i">&lt;i&gt;I&lt;/i&gt;&lt;/a&gt;
     &lt;a href="#body" data-cotton-callback="inline" data-cotton-before="+" data-cotton-after="+" data-cotton-shortcut="u"&gt;&lt;ins&gt;U&lt;/ins&gt;&lt;/a&gt;
@@ -93,56 +20,6 @@
     &lt;a href="#body" data-cotton-callback="inline" data-cotton-before="!" data-cotton-after="!"&gt;img&lt;/a&gt;
 &lt;/p&gt;
 
-&lt;p&gt;&lt;textarea id="body" name="body" rows="4" cols="30"&gt;&lt;/textarea&gt;&lt;/p&gt;</code></pre>
-
-        <p>These buttons can be included anywhere in your document.</p>
-
-        <h2>Supports</h2>
-
-        <h3>Web browsers</h3>
-
-        <p><b>Cotton.js</b> will run on any modern web browser. The base browser compatibility includes Internet Explorer 9 and 10, and the last two stable releases of Firefox, Chrome, Safari and Opera.</p>
-
-        <p>Internet Explorer 8 and older are not supported as <code>Cotton.js</code> uses no platform-specific abstraction and exceptions outside from the one offered by jQuery.</p>
-
-        <h3>AMD</h3>
-
-        <p>In addition to normal browser global use, <b>Cotton.js</b> can be used with <a href="http://requirejs.org/">RequireJS</a> and other AMD loaders. The plugin registers itself as an anonymous module, if the use of an AMD API is detected.</p>
-
-        <pre><code class="language-javascript">require(['jquery', 'cotton'], function ($) {
+&lt;p&gt;&lt;textarea id="body" name="body" rows="4" cols="30"&gt;&lt;/textarea&gt;&lt;/p&gt;</code></pre><p>These buttons can be included anywhere in your document.</p><h2>Supports</h2><h3>Web browsers</h3><p><b>Cotton.js</b> will run on any modern web browser. The base browser compatibility includes Internet Explorer 9 and 10, and the last two stable releases of Firefox, Chrome, Safari and Opera.</p><p>Internet Explorer 8 and older are not supported as<code>Cotton.js</code>uses no platform-specific abstraction and exceptions outside from the one offered by jQuery.</p><h3>AMD</h3><p>In addition to normal browser global use, <b>Cotton.js</b> can be used with <a href="http://requirejs.org/">RequireJS</a> and other AMD loaders. The plugin registers itself as an anonymous module, if the use of an AMD API is detected.</p><pre><code class="language-javascript">require(['jquery', 'cotton'], function ($) {
     $('.cotton a').cotton();
-});</code></pre>
-
-        <p>With the default RequireJS configuration, the above would load two files, <code>scripts/jquery.js</code> and <code>scripts/cotton.js</code>, and then attach the toolbar functionality to <code>.cotton a</code> elements present on the document at the time.</p>
-
-        <h3>jQuery</h3>
-
-        <p>Currently <b>Cotton.js</b> supports <a href="http://jquery.com/">jQuery</a> library versions starting from 1.7. This includes versions such as, but not limited to, 1.7.2, 1.8.3, 1.9.1, 1.10.1 and 2.0.2. See <a href="https://github.com/gocom/cotton/tree/master/test">tests directory</a> for all versions the project is tested against.</p>
-
-        <div class="author">
-            <div class="face"></div>
-            <p><b>Cotton.js</b> is made by Jukka Svahn, a developer at <a href="http://textpattern.com">Textpattern</a>.</p>
-            <p class="profile-links">
-                <a href="https://twitter.com/gocom"><i class="icon-twitter"></i></a>
-                <a href="https://github.com/gocom"><i class="icon-github"></i></a>
-            </p>
-        </div>
-
-        <h2>Docs</h2>
-        <p>Docs here.</p>
-
-        <h2>License</h2>
-
-        <p><b>Cotton.js</b> is released under the MIT license. <a href="/LICENSE.txt">See the full license file</a>.</p>
-
-    </main>
-
-    <footer id="footer">
-        <p><b>Website</b> icons from <a href="http://fontawesome.io/">Font Awesome</a> by <a href="https://twitter.com/byscuits">Dave Gandy</a>, syntax highlighting <a href="http://prismjs.com/">Prism.js</a>, loaded with <a href="http://requirejs.org/">RequireJS</a> and <a href="https://github.com/typekit/webfontloader">WebFont Loader</a>. Fonts <a href="http://www.google.com/fonts/specimen/PT+Sans">PT Sans</a> by <a href="http://www.paratype.com/">ParaType</a>, <a href="http://levien.com/type/myfonts/inconsolata.html">Inconsolata</a> by <a href="http://levien.com/">Raph Levien</a>, and <a href="http://www.google.com/fonts/specimen/Ubuntu">Ubuntu</a> by <a href="http://www.daltonmaag.com/">Dalton Maag</a>. Hosted on <a href="https://github.com">GitHub</a>, assets served via <a href="http://www.maxcdn.com/">MaxCDN</a>, <a href="http://www.google.com/fonts/">Google Fonts</a> and <a href="https://developers.google.com/speed/libraries/">Hosted Libraries</a>.</p>
-        <p><b>Cotton.js</b> is developed using and loving <a href="http://jquery.com">jQuery</a>, <a href="https://travis-ci.org/">Travis CI</a>, <a href="http://nodejs.org/">node.js</a>, <a href="http://gruntjs.com/">Grunt</a>, <a href="https://github.com/mishoo/UglifyJS">UglifyJS</a>, <a href="http://www.jshint.com/">JSHint</a>, <a href="http://qunitjs.com/">QUnit</a> and <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a>. On an aging Macbook Pro, powered by a electricity bill and a coffee jacked developer.</p>
-        <p class="copy">Copyright &copy; 2013 Jukka Svahn</p>
-    </footer>
-
-    <script data-main="/assets/js/main.js" src="/assets/js/require.js"></script>
-</body>
-</html>
+});</code></pre><p>With the default RequireJS configuration, the above would load two files,<code>scripts/jquery.js</code>and<code>scripts/cotton.js</code>, and then attach the toolbar functionality to<code>.cotton a</code>elements present on the document at the time.</p><h3>jQuery</h3><p>Currently <b>Cotton.js</b> supports <a href="http://jquery.com/">jQuery</a> library versions starting from 1.7. This includes versions such as, but not limited to, 1.7.2, 1.8.3, 1.9.1, 1.10.1 and 2.0.2. See <a href="https://github.com/gocom/cotton/tree/master/test">tests directory</a> for all versions the project is tested against.</p><div class="author"><div class="face"></div><p><b>Cotton.js</b> is made by Jukka Svahn, a developer at <a href="http://textpattern.com">Textpattern</a>.</p><p class="profile-links"><a href="https://twitter.com/gocom"><i class="icon-twitter"></i></a> <a href="https://github.com/gocom"><i class="icon-github"></i></a></p></div><h2>Docs</h2><p>Docs here.</p><h2>License</h2><p><b>Cotton.js</b> is released under the MIT license. <a href="/LICENSE.txt">See the full license file</a>.</p></main><footer id="footer"><p><b>Website</b> icons from <a href="http://fontawesome.io/">Font Awesome</a> by <a href="https://twitter.com/byscuits">Dave Gandy</a>, syntax highlighting <a href="http://prismjs.com/">Prism.js</a>, loaded with <a href="http://requirejs.org/">RequireJS</a> and <a href="https://github.com/typekit/webfontloader">WebFont Loader</a>. Fonts <a href="http://www.google.com/fonts/specimen/PT+Sans">PT Sans</a> by <a href="http://www.paratype.com/">ParaType</a>, <a href="http://levien.com/type/myfonts/inconsolata.html">Inconsolata</a> by <a href="http://levien.com/">Raph Levien</a>, and <a href="http://www.google.com/fonts/specimen/Ubuntu">Ubuntu</a> by <a href="http://www.daltonmaag.com/">Dalton Maag</a>. Hosted on <a href="https://github.com">GitHub</a>, assets served via <a href="http://www.maxcdn.com/">MaxCDN</a>, <a href="http://www.google.com/fonts/">Google Fonts</a> and <a href="https://developers.google.com/speed/libraries/">Hosted Libraries</a>.</p><p><b>Cotton.js</b> is developed using and loving <a href="http://jquery.com">jQuery</a>, <a href="https://travis-ci.org/">Travis CI</a>, <a href="http://nodejs.org/">node.js</a>, <a href="http://gruntjs.com/">Grunt</a>, <a href="https://github.com/mishoo/UglifyJS">UglifyJS</a>, <a href="http://www.jshint.com/">JSHint</a>, <a href="http://qunitjs.com/">QUnit</a> and <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a>. On an aging Macbook Pro, powered by a electricity bill and a coffee jacked developer.</p><p class="copy">Copyright &copy; 2013 Jukka Svahn</p></footer><script data-main="/assets/js/main.js" src="/assets/js/require.js"></script></body></html>

@@ -70,7 +70,7 @@ module.exports = function (grunt)
                     {
                         expand: true,
                         cwd: 'bower_components/google-code-prettify/src/',
-                        src: 'lang-*.js',
+                        src: ['lang-css.js'],
                         dest: 'assets/js/'
                     }
                 ]

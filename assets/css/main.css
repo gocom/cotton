@@ -382,10 +382,10 @@ textarea {
 
 header {
     text-align: center;
-    padding: 5.5em 10% 3em 10%;
-    background: #eee no-repeat 50% 50%;
+    padding: 3em 10% 3em 10%;
+    background: url(../img/header.jpg) no-repeat 50% 50%;
     background-size: cover;
-    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.6), 0 0 1px rgba(0, 0, 0, 0.9);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 }
 
@@ -413,16 +413,14 @@ header h1 a:hover {
 
 header .slogan {
     margin: 0 0 1em 0;
-    color: #9da8ab;
+    color: #fff;
 }
 
-header .social {
-    margin: 0;
-}
-
-header .social a {
+.social a {
     padding: 0.1em 0.6em;
     font-size: 0.5em;
+    line-height: 1.714;
+    text-transform: none;
 }
 
 /**
@@ -433,10 +431,6 @@ nav {
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 0.05em 0.2em rgba(0, 0, 0, 0.1);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
     background: #fff;
     z-index: 5;
 }
@@ -464,6 +458,9 @@ nav a {
 .menuOpen nav {
     display: block;
     position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 #toggle {
@@ -582,7 +579,7 @@ footer .copy {
 .download-notes {
     font-size: 0.65em;
     margin: 0 0 1em 0;
-    color: #9da8ab;
+    color: #fff;
 }
 
 .download-notes a {

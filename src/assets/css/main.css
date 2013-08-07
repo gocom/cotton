@@ -67,80 +67,40 @@ pre .badge {
  * Syntax highlight.
  */
 
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-    color: #998;
-}
-
-.support {
-    color: #0086b3;
-}
-
-.token.punctuation {
-    color: #9da8ab;
-}
-
-.token.namespace {
+.pln,
+.kwd,
+.pun,
+.opn,
+.clo,
+.dec {
     color: #333;
 }
 
-.token.function {
-    color: #900;
+.str,
+.atv {
+    color: #dd1144;
 }
 
-.token.class {
-    color: #458;
+.com {
+    color: #998;
 }
 
-.token.property {
-    font-weight: bold;
+.lit,
+.typ {
+    color: #445588;
 }
 
-.token.boolean,
-.token.number {
-    font-weight: normal;
-    color: #099;
-}
-
-.token.tag {
+.tag {
     color: navy;
 }
 
-.token.attr-name {
+.atn,
+.var {
     color: teal;
 }
 
-.token.atrule,
-.token.attr-value,
-.token.selector,
-.token.string {
-    font-weight: normal;
-    color: #d14;
-}
-
-.token.operator,
-.token.entity,
-.token.url {
-    color: #a67f59;
-}
-
-.token.keyword {
-    font-weight: bold;
-}
-
-.token.regex,
-.token.important {
-    color: #009926;
-}
-
-.token.important {
-    font-weight: bold;
-}
-
-.token.entity {
-    cursor: help;
+.fun {
+    color: #990000;
 }
 
 /**

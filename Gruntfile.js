@@ -105,7 +105,8 @@ module.exports = function (grunt)
                     equal: true,
                     WebFont: true,
                     require: true,
-                    requirejs: true
+                    requirejs: true,
+                    prettyPrint: true
                 }
             }
         }

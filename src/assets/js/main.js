@@ -20,6 +20,21 @@
         });
     });
 
+    require(['jquery'], function ($)
+    {
+        var code = $('pre code');
+
+        if (code.length)
+        {
+            code.parent().addClass('prettyprint');
+
+            require(['prettify'], function ()
+            {
+                prettyPrint();
+            });
+        }
+    });
+
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-41593502-1']);
     _gaq.push(['_gat._anonymizeIp']);
